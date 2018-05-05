@@ -146,3 +146,38 @@ void Station::addRailConnection(const shared_ptr<Station> &toAdd, const int &dur
     railNeighborStations.emplace_back(toAdd,durationTime);
 }
 
+void Station::updateConnection(const string &destinationNode, const int &duration) {
+    for(auto neighbor : busNeighborStations){
+        if (auto station = neighbor.first.lock()){
+            if (station->getName() == destinationNode){
+                neighbor.second = duration;
+                return;
+            }
+        }
+    }
+    for(auto neighbor : tramNeighborStations){
+        if (auto station = neighbor.first.lock()){
+            if (station->getName() == destinationNode){
+                neighbor.second = duration;
+                return;
+            }
+        }
+    }
+    for(auto neighbor : sprinterNeighborStations){
+        if (auto station = neighbor.first.lock()){
+            if (station->getName() == destinationNode){
+                neighbor.second = duration;
+                return;
+            }
+        }
+    }
+    for(auto neighbor : railNeighborStations){
+        if (auto station = neighbor.first.lock()){
+            if (station->getName() == destinationNode){
+                neighbor.second = duration;
+                return;
+            }
+        }
+    }
+}
+

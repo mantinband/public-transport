@@ -17,8 +17,14 @@ int main(int argc, char **argv) {
             } else if (strcmp(argv[i],"-o") == 0){
                 publicTransport.setOutputFile(argv[++i]);
             } else {
-                ifs->open(argv[i],fstream::in);
-                publicTransport.load(ifs,argv[i]);
+                try {
+                    ifs->open(argv[i], fstream::in);
+                    publicTransport.load(ifs, argv[i]);
+                } catch (exception &e){
+                    if (i == argc-1 && publicTransport.getNumberOfStations() == 0){
+                        throw PublicTransport::invalidInputFileException();
+                    }
+                }
             }
         }
     } catch (exception &e){

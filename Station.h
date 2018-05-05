@@ -59,6 +59,7 @@ public:
 
     string getName() const;
 
+    void updateConnection(const string &destinationNode, const int &duration);
 };
 
 

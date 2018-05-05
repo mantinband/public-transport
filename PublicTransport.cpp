@@ -24,6 +24,9 @@ void PublicTransport::load(shared_ptr<ifstream> inputFile,const string &fileName
             addStation(destinationNode);
         }
         if (fileName.substr(0,3) == "bus"){
+            if (getStation(sourceNode)->hasNeighborStation(destinationNode)){
+                getStation(sourceNode)->updateConnection(destinationNode,stoi(duration));
+            }
             getStation(sourceNode)->addBusConnection(getStation(destinationNode),stoi(duration));
         } else if (fileName.substr(0,4) == "tram"){
             getStation(sourceNode)->addTramConnection(getStation(destinationNode),stoi(duration));
@@ -117,4 +120,8 @@ void PublicTransport::printStationList() {
     cout << sprinterChangeTime<< endl;
     cout << railChangeTime << endl;
 
+}
+
+int PublicTransport::getNumberOfStations() {
+    return static_cast<int>(stationList.size());
 }

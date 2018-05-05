@@ -41,6 +41,8 @@ public:
 
     void printStationList();
 
+    int getNumberOfStations();
+
 private:
     string outputFileName;
     vector<shared_ptr<Station>> stationList;
