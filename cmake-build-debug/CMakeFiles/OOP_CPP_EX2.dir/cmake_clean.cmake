@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.o"
   "CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o"
   "CMakeFiles/OOP_CPP_EX2.dir/StadStation.cpp.o"
+  "CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.o"
   "OOP_CPP_EX2.pdb"
   "OOP_CPP_EX2"
 )

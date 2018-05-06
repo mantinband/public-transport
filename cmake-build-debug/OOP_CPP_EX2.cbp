@@ -117,6 +117,12 @@
 		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/main.cpp">
 			<Option target="OOP_CPP_EX2"/>
 		</Unit>
+		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/mainFunctions.cpp">
+			<Option target="OOP_CPP_EX2"/>
+		</Unit>
+		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/mainFunctions.h">
+			<Option target="OOP_CPP_EX2"/>
+		</Unit>
 		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

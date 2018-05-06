@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/amichai/CLionProjects/OOP_CPP_EX2/StadStation.cpp" "/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles/OOP_CPP_EX2.dir/StadStation.cpp.o"
   "/home/amichai/CLionProjects/OOP_CPP_EX2/Station.cpp" "/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles/OOP_CPP_EX2.dir/Station.cpp.o"
   "/home/amichai/CLionProjects/OOP_CPP_EX2/main.cpp" "/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o"
+  "/home/amichai/CLionProjects/OOP_CPP_EX2/mainFunctions.cpp" "/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -7,6 +7,9 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <sstream>
+#include <set>
+
 using namespace std;
 
 class Station {
@@ -60,6 +63,18 @@ public:
     string getName() const;
 
     void updateConnection(const string &destinationNode, const int &duration);
+
+    void insertBusNeighborsToSetRec(shared_ptr<set<string>> neighborsSet) const;
+    void insertTramNeighborsToSetRec(shared_ptr<set<string>> neighborsSet) const;
+    void insertSprinterNeighborsToSetRec(shared_ptr<set<string>> neighborsSet) const;
+    void insertRailNeighborsToSetRec(shared_ptr<set<string>> neighborsSet) const;
+
+    shared_ptr<string> getBusNeighbors() const ;
+    shared_ptr<string> getTramNeighbors() const ;
+    shared_ptr<string> getSprinterNeighbors() const ;
+    shared_ptr<string> getRailNeighbors() const ;
+
+    shared_ptr<string> getString(shared_ptr<set<string>> set) const;
 };
 
 

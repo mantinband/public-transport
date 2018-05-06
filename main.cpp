@@ -2,12 +2,14 @@
 #include <fstream>
 #include <cstring>
 #include <memory>
+#include "mainFunctions.h"
 #include "PublicTransport.h"
 using namespace std;
 
 int main(int argc, char **argv) {
     PublicTransport publicTransport;
 
+    //load data from given arguments
     try{
         for (int i=1; i<argc; i++){
             shared_ptr<ifstream> ifs(new ifstream());
@@ -29,8 +31,61 @@ int main(int argc, char **argv) {
         }
     } catch (exception &e){
         cerr << e.what() << endl;
+    } // end of load data
+
+
+    string input;
+    cin >> input;
+
+
+    while (input != "QUIT"){
+        switch(getOption(input)){
+            case (load): {
+                string fileName;
+                cin >> fileName;
+                shared_ptr<ifstream> ifs(new ifstream(fileName));
+                try {
+                    publicTransport.load(ifs, fileName);
+                } catch (PublicTransport::invalidInputFileException &e) {
+                    e.what();
+                }
+            }   break;
+            case (outbound): {
+                string sourceNode;
+                cin >> sourceNode;
+                if (!publicTransport.isInStationList(sourceNode)){
+                    cerr << sourceNode << "does not exist in the current network \n" ;
+                } else {
+                    publicTransport.outboundStations(sourceNode);
+                }
+            } break;
+            case (inbound): {
+                string destinationNode;
+                cin >> destinationNode;
+                if (!publicTransport.isInStationList(destinationNode)){
+                    cerr << destinationNode << "does not exist in the current network \n";
+                } else {
+                    publicTransport.inboundStations(destinationNode);
+                }
+            } break;
+            case (uniExpress):
+                break;
+            case (multiExpress):
+                break;
+            case (print):
+                publicTransport.printStationList();
+                break;
+            default:
+                cerr << "ERROR: Invalid input" << endl;
+
+        }
+        cin >> input;
     }
+
 
     publicTransport.printStationList();
     return 0;
 }
+
+
+

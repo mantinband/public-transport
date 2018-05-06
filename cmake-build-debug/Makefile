@@ -285,6 +285,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+mainFunctions.o: mainFunctions.cpp.o
+
+.PHONY : mainFunctions.o
+
+# target to build an object file
+mainFunctions.cpp.o:
+	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.o
+.PHONY : mainFunctions.cpp.o
+
+mainFunctions.i: mainFunctions.cpp.i
+
+.PHONY : mainFunctions.i
+
+# target to preprocess a source file
+mainFunctions.cpp.i:
+	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.i
+.PHONY : mainFunctions.cpp.i
+
+mainFunctions.s: mainFunctions.cpp.s
+
+.PHONY : mainFunctions.s
+
+# target to generate assembly for a file
+mainFunctions.cpp.s:
+	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.s
+.PHONY : mainFunctions.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -312,6 +339,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... mainFunctions.o"
+	@echo "... mainFunctions.i"
+	@echo "... mainFunctions.s"
 .PHONY : help
 
 

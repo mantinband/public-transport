@@ -43,6 +43,10 @@ public:
 
     int getNumberOfStations();
 
+    void outboundStations(const string &sourceNode);
+
+    void inboundStations(const string &destinationNode);
+
 private:
     string outputFileName;
     vector<shared_ptr<Station>> stationList;

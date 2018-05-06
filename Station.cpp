@@ -149,7 +149,7 @@ void Station::addRailConnection(const shared_ptr<Station> &toAdd, const int &dur
 void Station::updateConnection(const string &destinationNode, const int &duration) {
     for(auto neighbor : busNeighborStations){
         if (auto station = neighbor.first.lock()){
-            if (station->getName() == destinationNode){
+            if (station->getName() == destinationNode && neighbor.second > duration){
                 neighbor.second = duration;
                 return;
             }
@@ -157,7 +157,7 @@ void Station::updateConnection(const string &destinationNode, const int &duratio
     }
     for(auto neighbor : tramNeighborStations){
         if (auto station = neighbor.first.lock()){
-            if (station->getName() == destinationNode){
+            if (station->getName() == destinationNode && neighbor.second > duration){
                 neighbor.second = duration;
                 return;
             }
@@ -165,7 +165,7 @@ void Station::updateConnection(const string &destinationNode, const int &duratio
     }
     for(auto neighbor : sprinterNeighborStations){
         if (auto station = neighbor.first.lock()){
-            if (station->getName() == destinationNode){
+            if (station->getName() == destinationNode && neighbor.second > duration){
                 neighbor.second = duration;
                 return;
             }
@@ -173,7 +173,7 @@ void Station::updateConnection(const string &destinationNode, const int &duratio
     }
     for(auto neighbor : railNeighborStations){
         if (auto station = neighbor.first.lock()){
-            if (station->getName() == destinationNode){
+            if (station->getName() == destinationNode && neighbor.second > duration){
                 neighbor.second = duration;
                 return;
             }
@@ -181,3 +181,86 @@ void Station::updateConnection(const string &destinationNode, const int &duratio
     }
 }
 
+shared_ptr<string> Station::getBusNeighbors() const {
+    shared_ptr<set<string>> neighborSet(new set<string>());
+    for (auto station : busNeighborStations){
+        if (station.first.lock()) {
+            station.first.lock()->insertBusNeighborsToSetRec(neighborSet);
+        }
+    }
+    return getString(neighborSet);
+}
+
+shared_ptr<string> Station::getTramNeighbors() const {
+    shared_ptr<set<string>> neighborSet(new set<string>());
+    for (auto station : tramNeighborStations){
+        if (station.first.lock()) {
+            station.first.lock()->insertTramNeighborsToSetRec(neighborSet);
+        }
+    }
+    return getString(neighborSet);
+}
+
+shared_ptr<string> Station::getSprinterNeighbors() const {
+    shared_ptr<set<string>> neighborSet(new set<string>());
+    for (auto station : sprinterNeighborStations){
+        if (station.first.lock()) {
+            station.first.lock()->insertSprinterNeighborsToSetRec(neighborSet);
+        }
+    }
+    return getString(neighborSet);
+}
+
+shared_ptr<string> Station::getRailNeighbors() const {
+    shared_ptr<set<string>> neighborSet(new set<string>());
+    for (auto station : railNeighborStations){
+        if (station.first.lock()) {
+            station.first.lock()->insertRailNeighborsToSetRec(neighborSet);
+        }
+    }
+    return getString(neighborSet);
+}
+
+void Station::insertBusNeighborsToSetRec(shared_ptr<set<string>> neighborsSet) const {
+    neighborsSet->insert(name);
+    for (auto station : busNeighborStations){
+        if (station.first.lock()) {
+            station.first.lock()->insertBusNeighborsToSetRec(neighborsSet);
+        }
+    }
+}
+
+void Station::insertTramNeighborsToSetRec(shared_ptr<set<string>> neighborsSet) const {
+    neighborsSet->insert(name);
+    for (auto station : tramNeighborStations){
+        if (station.first.lock()) {
+            station.first.lock()->insertTramNeighborsToSetRec(neighborsSet);
+        }
+    }
+}
+
+void Station::insertSprinterNeighborsToSetRec(shared_ptr<set<string>> neighborsSet) const {
+    neighborsSet->insert(name);
+    for (auto station : sprinterNeighborStations){
+        if (station.first.lock()) {
+            station.first.lock()->insertSprinterNeighborsToSetRec(neighborsSet);
+        }
+    }
+}
+
+void Station::insertRailNeighborsToSetRec(shared_ptr<set<string>> neighborsSet) const {
+    neighborsSet->insert(name);
+    for (auto station : railNeighborStations){
+        if (station.first.lock()) {
+            station.first.lock()->insertRailNeighborsToSetRec(neighborsSet);
+        }
+    }
+}
+
+shared_ptr<string> Station::getString(shared_ptr<set<string>> set) const {
+    shared_ptr<string> stringResult(new string());
+    for (const auto &station : *set){
+        *stringResult += station + " ";
+    }
+    return stringResult;
+}
