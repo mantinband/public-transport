@@ -3,30 +3,44 @@
 
 CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o: ../CentralStation.cpp
 CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o: ../CentralStation.h
+CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o: ../Neighbors.h
 CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o: ../Station.h
 
 CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.o: ../IntercityStation.cpp
 CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.o: ../IntercityStation.h
+CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.o: ../Neighbors.h
 CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.o: ../Station.h
+
+CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o: ../Neighbors.cpp
+CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o: ../Neighbors.h
+CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o: ../Station.h
 
 CMakeFiles/OOP_CPP_EX2.dir/PublicTransport.cpp.o: ../CentralStation.h
 CMakeFiles/OOP_CPP_EX2.dir/PublicTransport.cpp.o: ../IntercityStation.h
+CMakeFiles/OOP_CPP_EX2.dir/PublicTransport.cpp.o: ../Neighbors.h
 CMakeFiles/OOP_CPP_EX2.dir/PublicTransport.cpp.o: ../PublicTransport.cpp
 CMakeFiles/OOP_CPP_EX2.dir/PublicTransport.cpp.o: ../PublicTransport.h
 CMakeFiles/OOP_CPP_EX2.dir/PublicTransport.cpp.o: ../StadStation.h
 CMakeFiles/OOP_CPP_EX2.dir/PublicTransport.cpp.o: ../Station.h
 
+CMakeFiles/OOP_CPP_EX2.dir/StadStation.cpp.o: ../Neighbors.h
 CMakeFiles/OOP_CPP_EX2.dir/StadStation.cpp.o: ../StadStation.cpp
 CMakeFiles/OOP_CPP_EX2.dir/StadStation.cpp.o: ../StadStation.h
 CMakeFiles/OOP_CPP_EX2.dir/StadStation.cpp.o: ../Station.h
 
+CMakeFiles/OOP_CPP_EX2.dir/Station.cpp.o: ../Neighbors.h
 CMakeFiles/OOP_CPP_EX2.dir/Station.cpp.o: ../Station.cpp
 CMakeFiles/OOP_CPP_EX2.dir/Station.cpp.o: ../Station.h
 
 CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../CentralStation.h
 CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../IntercityStation.h
+CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../Neighbors.h
 CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../PublicTransport.h
 CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../StadStation.h
 CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../Station.h
 CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../main.cpp
+CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../mainFunctions.h
+
+CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.o: ../mainFunctions.cpp
+CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.o: ../mainFunctions.h
 

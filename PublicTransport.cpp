@@ -26,16 +26,16 @@ void PublicTransport::load(shared_ptr<ifstream> inputFile,const string &fileName
         if (getStation(sourceNode)->hasNeighborStation(destinationNode)){
             getStation(sourceNode)->updateConnection(destinationNode,stoi(duration));
         }else if (fileName.substr(0,3) == "bus"){
-            getStation(sourceNode)->addBusConnection(getStation(destinationNode), stoi(duration));
+            getStation(sourceNode)->getBusNeighbors().add(getStation(destinationNode), stoi(duration));
             cout << "added bus connectino from " << sourceNode << " to " << destinationNode << endl;
         } else if (fileName.substr(0,4) == "tram"){
-            getStation(sourceNode)->addTramConnection(getStation(destinationNode),stoi(duration));
+            getStation(sourceNode)->getTramNeighbors().add(getStation(destinationNode),stoi(duration));
             cout << "added tram connectino from " << sourceNode << " to " << destinationNode << endl;
         } else if (fileName.substr(0,8) == "sprinter"){
-            getStation(sourceNode)->addSprinterConnection(getStation(destinationNode),stoi(duration));
+            getStation(sourceNode)->getSprinterNeighbors().add(getStation(destinationNode),stoi(duration));
             cout << "added sprinter connectino from " << sourceNode << " to " << destinationNode << endl;
         } else if (fileName.substr(0,4) == "rail"){
-            getStation(sourceNode)->addRailConnection(getStation(destinationNode),stoi(duration));
+            getStation(sourceNode)->getRailNeighbors().add(getStation(destinationNode),stoi(duration));
             cout << "added rail connectino from " << sourceNode << " to " << destinationNode << endl;
         } else {
             throw invalidInputFileException();
@@ -125,10 +125,10 @@ int PublicTransport::getNumberOfStations() {
 }
 
 void PublicTransport::outboundStations(const string &sourceNode) {
-    cout << "bus: " << *(getStation(sourceNode)->getBusNeighbors()) << endl;
-    cout << "tram: " << *(getStation(sourceNode)->getTramNeighbors()) << endl;
-    cout << "sprinter: " << *(getStation(sourceNode)->getSprinterNeighbors()) << endl;
-    cout << "rail: " << *(getStation(sourceNode)->getRailNeighbors()) << endl;
+    cout << "bus: " << *(getStation(sourceNode)->getBusRouteOptions()) << endl;
+    cout << "tram: " << *(getStation(sourceNode)->getTramRouteOptions()) << endl;
+    cout << "sprinter: " << *(getStation(sourceNode)->getSprinterRouteOptions()) << endl;
+    cout << "rail: " << *(getStation(sourceNode)->getRailRouteOptions()) << endl;
 }
 
 void PublicTransport::inboundStations(const string &destinationNode) {

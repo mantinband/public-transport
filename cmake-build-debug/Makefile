@@ -177,6 +177,33 @@ IntercityStation.cpp.s:
 	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.s
 .PHONY : IntercityStation.cpp.s
 
+Neighbors.o: Neighbors.cpp.o
+
+.PHONY : Neighbors.o
+
+# target to build an object file
+Neighbors.cpp.o:
+	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o
+.PHONY : Neighbors.cpp.o
+
+Neighbors.i: Neighbors.cpp.i
+
+.PHONY : Neighbors.i
+
+# target to preprocess a source file
+Neighbors.cpp.i:
+	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.i
+.PHONY : Neighbors.cpp.i
+
+Neighbors.s: Neighbors.cpp.s
+
+.PHONY : Neighbors.s
+
+# target to generate assembly for a file
+Neighbors.cpp.s:
+	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.s
+.PHONY : Neighbors.cpp.s
+
 PublicTransport.o: PublicTransport.cpp.o
 
 .PHONY : PublicTransport.o
@@ -327,6 +354,9 @@ help:
 	@echo "... IntercityStation.o"
 	@echo "... IntercityStation.i"
 	@echo "... IntercityStation.s"
+	@echo "... Neighbors.o"
+	@echo "... Neighbors.i"
+	@echo "... Neighbors.s"
 	@echo "... PublicTransport.o"
 	@echo "... PublicTransport.i"
 	@echo "... PublicTransport.s"

@@ -96,6 +96,12 @@
 		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/IntercityStation.h">
 			<Option target="OOP_CPP_EX2"/>
 		</Unit>
+		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/Neighbors.cpp">
+			<Option target="OOP_CPP_EX2"/>
+		</Unit>
+		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/Neighbors.h">
+			<Option target="OOP_CPP_EX2"/>
+		</Unit>
 		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/PublicTransport.cpp">
 			<Option target="OOP_CPP_EX2"/>
 		</Unit>
