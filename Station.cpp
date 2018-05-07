@@ -57,7 +57,7 @@ void Station::updateConnection(const string &destinationNode, const int &duratio
     }
 }
 
-shared_ptr<string> Station::getBusRouteOptions() const {
+string Station::getBusRouteOptions() const {
     shared_ptr<set<string>> neighborSet(new set<string>());
 
     auto neighborVector = busNeighbors.getNeighbors();
@@ -70,7 +70,7 @@ shared_ptr<string> Station::getBusRouteOptions() const {
     return getString(neighborSet);
 }
 
-shared_ptr<string> Station::getTramRouteOptions() const {
+string Station::getTramRouteOptions() const {
     shared_ptr<set<string>> neighborSet(new set<string>());
 
     auto neighborVector = tramNeighbors.getNeighbors();
@@ -84,7 +84,7 @@ shared_ptr<string> Station::getTramRouteOptions() const {
 }
 
 
-shared_ptr<string> Station::getSprinterRouteOptions() const {
+string Station::getSprinterRouteOptions() const {
     shared_ptr<set<string>> neighborSet(new set<string>());
 
     auto neighborVector = sprinterNeighbors.getNeighbors();
@@ -98,7 +98,7 @@ shared_ptr<string> Station::getSprinterRouteOptions() const {
 }
 
 
-shared_ptr<string> Station::getRailRouteOptions() const {
+string Station::getRailRouteOptions() const {
     shared_ptr<set<string>> neighborSet(new set<string>());
 
     auto neighborVector = railNeighbors.getNeighbors();
@@ -142,10 +142,13 @@ Neighbors &Station::getRailNeighbors()  {
     return railNeighbors;
 }
 
-shared_ptr<string> Station::getString(shared_ptr<set<string>> stationSet) const {
-    shared_ptr<string> stringResult(new string());
+string Station::getString(const shared_ptr<set<string>> &stationSet) const    {
+    string stringResult;
     for (const auto &station : *stationSet) {
-        *stringResult += station + " ";
+        stringResult += station + " ";
+    }
+    if (stringResult.empty()){
+        stringResult = "no outbound travel";
     }
     return stringResult;
 }

@@ -7,6 +7,8 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <set>
+
 class Station;
 
 using namespace std;
@@ -20,7 +22,13 @@ public:
     const pair<weak_ptr<Station>, int> & getRoute(const string &stationName) const;
     const vector<pair<weak_ptr<Station>, int>> &getNeighbors() const;
     void setNeighbors(const vector<pair<weak_ptr<Station>, int>> &neighbors);
+    bool searchBusStationRec(const string &destination, shared_ptr<set<string>> visitedStations) const;
+    bool searchTramStationRec(const string &destination, shared_ptr<set<string>> visitedStations) const;
+    bool searchSprinterStationRec(const string &destination, shared_ptr<set<string>> visitedStations) const;
+    bool searchRailStationRec(const string &destination, shared_ptr<set<string>> visitedStations) const;
+
 private:
+
     vector<pair<weak_ptr<Station>,int>> neighbors;
 };
 

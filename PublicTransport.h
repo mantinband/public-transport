@@ -40,22 +40,19 @@ public:
     };
 
     void printStationList();
-
     int getNumberOfStations();
-
-    void outboundStations(const string &sourceNode);
-
-    void inboundStations(const string &destinationNode);
-
+    string outboundStations(const string &sourceNode);
+    string inboundStations(const string &destinationNode);
 private:
-    string outputFileName;
+    shared_ptr<Station> getStation(const string &stationToFind);
+
     vector<shared_ptr<Station>> stationList;
     void addStation(const string &stationToAdd);
-    shared_ptr<Station> getStation(const string &stationToFind);
     int busChangeTime;
     int tramChangeTime;
     int sprinterChangeTime;
     int railChangeTime;
+    string outputFileName;
 };
 
 

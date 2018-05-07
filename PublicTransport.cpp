@@ -124,14 +124,49 @@ int PublicTransport::getNumberOfStations() {
     return static_cast<int>(stationList.size());
 }
 
-void PublicTransport::outboundStations(const string &sourceNode) {
-    cout << "bus: " << *(getStation(sourceNode)->getBusRouteOptions()) << endl;
-    cout << "tram: " << *(getStation(sourceNode)->getTramRouteOptions()) << endl;
-    cout << "sprinter: " << *(getStation(sourceNode)->getSprinterRouteOptions()) << endl;
-    cout << "rail: " << *(getStation(sourceNode)->getRailRouteOptions()) << endl;
+string PublicTransport::outboundStations(const string &sourceNode) {
+    return "bus: " + getStation(sourceNode)->getBusRouteOptions()
+            + "\ntram: " + getStation(sourceNode)->getTramRouteOptions()
+            + "\nsprinter: " + getStation(sourceNode)->getSprinterRouteOptions()
+            + "\nrail: " + getStation(sourceNode)->getRailRouteOptions();
+
 }
 
-void PublicTransport::inboundStations(const string &destinationNode) {
+string PublicTransport::inboundStations(const string &destinationNode) {
+    string busTransportStations;
+    string tramTransportStations;
+    string sprinterTransportStations;
+    string railTransportStations;
 
+    for (const auto &station : stationList){
+        if (station->getName() != destinationNode){
+            if (station->getBusNeighbors().searchBusStationRec(destinationNode, make_shared<set<string>>())) {
+                busTransportStations += station->getName() + " ";
+            }
+            if (station->getTramNeighbors().searchTramStationRec(destinationNode,make_shared<set<string>>())) {
+                tramTransportStations += station->getName() + " ";
+            }
+            if (station->getSprinterNeighbors().searchSprinterStationRec(destinationNode,make_shared<set<string>>())) {
+                sprinterTransportStations += station->getName() + " ";
+            }
+            if (station->getRailNeighbors().searchRailStationRec(destinationNode,make_shared<set<string>>())) {
+                railTransportStations += station->getName() + " ";
+            }
+        }
+    }
+
+    if (busTransportStations.empty()){
+        busTransportStations = "no outbound travel";
+    }
+    if (sprinterTransportStations.empty()){
+        sprinterTransportStations = "no outbound travel";
+    }
+    if (tramTransportStations.empty()){
+        tramTransportStations = "no outbound travel";
+    }
+    if (railTransportStations.empty()){
+        railTransportStations = "no outbound travel";
+    }
+    return "bus: " + busTransportStations + "\ntram: " + tramTransportStations + "\nsprinter: " + sprinterTransportStations + "\nrail: " + railTransportStations;
 }
 

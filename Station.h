@@ -35,12 +35,12 @@ public:
     void updateConnection(const string &destinationNode, const int &duration);
 
     void insertNeighborsToSetRec(shared_ptr<set<string>> neighborsSet, Neighbors neighbors) const;
-    shared_ptr<string> getBusRouteOptions() const;
-    shared_ptr<string> getString(shared_ptr<set<string>> stationSet) const;
-    shared_ptr<string> getTramRouteOptions() const;
-    shared_ptr<string> getSprinterRouteOptions() const;
-    shared_ptr<string> getRailRouteOptions() const;
+    string getBusRouteOptions() const;
+    string getTramRouteOptions() const;
+    string getSprinterRouteOptions() const;
+    string getRailRouteOptions() const;
 
+    string getString(const shared_ptr<set<string>> &stationSet) const;
 };
 
 

@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
                 if (!publicTransport.isInStationList(sourceNode)){
                     cerr << sourceNode << "does not exist in the current network \n" ;
                 } else {
-                    publicTransport.outboundStations(sourceNode);
+                    cout << publicTransport.outboundStations(sourceNode) << endl;
                 }
             } break;
             case (inbound): {
@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
                 if (!publicTransport.isInStationList(destinationNode)){
                     cerr << destinationNode << "does not exist in the current network \n";
                 } else {
-                    publicTransport.inboundStations(destinationNode);
+                    cout << publicTransport.inboundStations(destinationNode) << endl;
                 }
             } break;
             case (uniExpress):

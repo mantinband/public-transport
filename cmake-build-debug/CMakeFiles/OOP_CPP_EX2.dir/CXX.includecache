@@ -25,6 +25,8 @@ Station.h
 /home/amichai/CLionProjects/OOP_CPP_EX2/Neighbors.cpp
 Neighbors.h
 /home/amichai/CLionProjects/OOP_CPP_EX2/Neighbors.h
+Station.h
+/home/amichai/CLionProjects/OOP_CPP_EX2/Station.h
 
 /home/amichai/CLionProjects/OOP_CPP_EX2/Neighbors.h
 iostream
@@ -33,8 +35,6 @@ vector
 -
 memory
 -
-Station.h
-/home/amichai/CLionProjects/OOP_CPP_EX2/Station.h
 
 /home/amichai/CLionProjects/OOP_CPP_EX2/PublicTransport.cpp
 PublicTransport.h
