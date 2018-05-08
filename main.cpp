@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
                 string destinationNode;
                 cin >> destinationNode;
                 if (!publicTransport.isInStationList(destinationNode)){
-                    cerr << destinationNode << "does not exist in the current network \n";
+                    cerr << destinationNode << " does not exist in the current network \n";
                 } else {
                     cout << publicTransport.inboundStations(destinationNode) << endl;
                 }

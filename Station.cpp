@@ -6,12 +6,18 @@
 
 #include <utility>
 
+
 Station::Station(string name)
 :name(std::move(name))
 {}
 
 bool Station::hasNeighborStation(const string &stationName) const {
-    return busNeighbors.contains(stationName) || tramNeighbors.contains(stationName) || sprinterNeighbors.contains(stationName) || railNeighbors.contains(stationName);
+    for (const Neighbors &n : neighbors){
+        if (n.contains(stationName)){
+            return true;
+        }
+    }
+    return false;
 }
 
 string Station::getName() const {
@@ -20,10 +26,9 @@ string Station::getName() const {
 
 
 Station::Station(Station &rhs) {
-    busNeighbors = rhs.getBusNeighbors();
-    tramNeighbors= rhs.getTramNeighbors();
-    sprinterNeighbors = rhs.getSprinterNeighbors();
-    railNeighbors = rhs.getRailNeighbors();
+    for (int i=0; i<NUM_OF_TRANSPORT_OPTIONS; i++){
+        neighbors[i] = rhs.getNeighborsAt(i);
+    }
     name = rhs.getName();
 }
 
@@ -33,86 +38,37 @@ void Station::setName(const string &name) {
 }
 
 Station & Station::operator=(Station &&rhs) {
-    busNeighbors = rhs.getBusNeighbors();
-    tramNeighbors = rhs.getTramNeighbors();
-    sprinterNeighbors = rhs.getSprinterNeighbors();
-    railNeighbors = rhs.getRailNeighbors();
+    for (int i=0; i<NUM_OF_TRANSPORT_OPTIONS; i++){
+        neighbors[i] = rhs.getNeighborsAt(i);
+    }
     name = rhs.getName();
 
     return *this;
 }
 
-void Station::updateConnection(const string &destinationNode, const int &duration) {
-    if (busNeighbors.updateConnection(destinationNode,duration)){
-        return;
-    }
-    if (tramNeighbors.updateConnection(destinationNode,duration)){
-        return;
-    }
-    if (sprinterNeighbors.updateConnection(destinationNode,duration)){
-        return;
-    }
-    if (railNeighbors.updateConnection(destinationNode,duration)){
-        return;
-    }
+void Station::updateConnection(string destinationNode, int duration, int i) {
+    neighbors[i].updateConnection(destinationNode,duration);
 }
 
-string Station::getBusRouteOptions() const {
+string Station::getRouteOptions(const int i) const {
     shared_ptr<set<string>> neighborSet(new set<string>());
 
-    auto neighborVector = busNeighbors.getNeighbors();
+    auto neighborVector = neighbors[i].getNeighbors();
 
     for (auto station : neighborVector){
         if (station.first.lock()) {
-            station.first.lock()->insertNeighborsToSetRec(neighborSet,busNeighbors);
+            station.first.lock()->insertNeighborsToSetRec(neighborSet,station.first.lock()->getNeighborsAt(i),i);
         }
     }
-    return getString(neighborSet);
-}
+    neighborSet->erase(name);
 
-string Station::getTramRouteOptions() const {
-    shared_ptr<set<string>> neighborSet(new set<string>());
-
-    auto neighborVector = tramNeighbors.getNeighbors();
-
-    for (auto station : neighborVector){
-        if (station.first.lock()) {
-            station.first.lock()->insertNeighborsToSetRec(neighborSet,tramNeighbors);;
-        }
-    }
-    return getString(neighborSet);
+    string res = getString(neighborSet);
+    addTransportPrefix(res,i);
+    return res;
 }
 
 
-string Station::getSprinterRouteOptions() const {
-    shared_ptr<set<string>> neighborSet(new set<string>());
-
-    auto neighborVector = sprinterNeighbors.getNeighbors();
-
-    for (auto station : neighborVector){
-        if (station.first.lock()) {
-            station.first.lock()->insertNeighborsToSetRec(neighborSet,sprinterNeighbors);;
-        }
-    }
-    return getString(neighborSet);
-}
-
-
-string Station::getRailRouteOptions() const {
-    shared_ptr<set<string>> neighborSet(new set<string>());
-
-    auto neighborVector = railNeighbors.getNeighbors();
-
-    for (auto station : neighborVector){
-        if (station.first.lock()) {
-            station.first.lock()->insertNeighborsToSetRec(neighborSet,railNeighbors);;
-        }
-    }
-    return getString(neighborSet);
-}
-
-
-void Station::insertNeighborsToSetRec(shared_ptr<set<string>> neighborsSet, Neighbors neighbors) const {
+void Station::insertNeighborsToSetRec(const shared_ptr<set<string>> &neighborsSet, Neighbors neighbors, const int i) const {
     if (neighborsSet->find(name) != neighborsSet->end()){
         return;
     }
@@ -121,34 +77,51 @@ void Station::insertNeighborsToSetRec(shared_ptr<set<string>> neighborsSet, Neig
     neighborsSet->insert(name);
     for (auto station : neighborVector){
         if (station.first.lock()) {
-            station.first.lock()->insertNeighborsToSetRec(neighborsSet, neighbors);
+            station.first.lock()->insertNeighborsToSetRec(neighborsSet,station.first.lock()->getNeighborsAt(i),i);
         }
     }
-}
-
-Neighbors &Station::getBusNeighbors() {
-    return busNeighbors;
-}
-
-Neighbors &Station::getTramNeighbors()  {
-    return tramNeighbors;
-}
-
-Neighbors &Station::getSprinterNeighbors() {
-    return sprinterNeighbors;
-}
-
-Neighbors &Station::getRailNeighbors()  {
-    return railNeighbors;
 }
 
 string Station::getString(const shared_ptr<set<string>> &stationSet) const    {
     string stringResult;
     for (const auto &station : *stationSet) {
-        stringResult += station + " ";
+        stringResult += station + "\t";
     }
     if (stringResult.empty()){
         stringResult = "no outbound travel";
     }
     return stringResult;
 }
+
+const Neighbors *Station::getNeighbors() const {
+    return neighbors;
+}
+
+Neighbors &Station::getNeighborsAt(const int &i) const {
+    return (Neighbors&)neighbors[i];
+}
+
+void Station::addTransportPrefix(string &s, int i) {
+    switch (i) {
+        case bus:
+            s = "bus: " + s; break;
+        case tram:
+            s = "tram: " + s; break;
+        case sprinter:
+            s = "sprinter: " + s; break;
+        case rail:
+            s = "rail: " + s; break;
+        default:;
+    }
+}
+
+int Station::getIndexOfTransportForm(const string &s) {
+    if (s.find("bus") == 0) return bus;
+    if (s.find("tram") == 0) return tram;
+    if (s.find("sprinter")) return sprinter;
+    if (s.find("rail")) return rail;
+
+    return -1;
+}
+
+

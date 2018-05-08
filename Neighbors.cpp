@@ -49,7 +49,7 @@ void Neighbors::setNeighbors(const vector<pair<weak_ptr<Station>, int>> &neighbo
     Neighbors::neighbors = neighbors;
 }
 
-bool Neighbors::searchBusStationRec(const string &destination, shared_ptr<set<string>> visitedStations) const {
+bool Neighbors::searchStationRecAt(const string &destination, shared_ptr<set<string>> visitedStations, const int i) const {
     for (auto station : neighbors){
         if (station.first.lock()->getName() == destination){
             return true;
@@ -57,50 +57,7 @@ bool Neighbors::searchBusStationRec(const string &destination, shared_ptr<set<st
         if (visitedStations->find(station.first.lock()->getName()) != visitedStations->end()){
             return false;
         }
-        return station.first.lock()->getBusNeighbors().searchBusStationRec(destination,visitedStations);
-    }
-
-    return false;
-}
-
-
-bool Neighbors::searchTramStationRec(const string &destination, shared_ptr<set<string>> visitedStations) const {
-    for (auto station : neighbors){
-        if (station.first.lock()->getName() == destination){
-            return true;
-        }
-        if (visitedStations->find(station.first.lock()->getName()) != visitedStations->end()){
-            return false;
-        }
-        return station.first.lock()->getTramNeighbors().searchTramStationRec(destination,visitedStations);
-    }
-
-    return false;
-}
-
-bool Neighbors::searchSprinterStationRec(const string &destination, shared_ptr<set<string>> visitedStations) const {
-    for (auto station : neighbors){
-        if (station.first.lock()->getName() == destination){
-            return true;
-        }
-        if (visitedStations->find(station.first.lock()->getName()) != visitedStations->end()){
-            return false;
-        }
-        return station.first.lock()->getSprinterNeighbors().searchSprinterStationRec(destination,visitedStations);
-    }
-
-    return false;
-}
-
-bool Neighbors::searchRailStationRec(const string &destination, shared_ptr<set<string>> visitedStations) const {
-    for (auto station : neighbors){
-        if (station.first.lock()->getName() == destination){
-            return true;
-        }
-        if (visitedStations->find(station.first.lock()->getName()) != visitedStations->end()){
-            return false;
-        }
-        return station.first.lock()->getRailNeighbors().searchRailStationRec(destination,visitedStations);
+        return station.first.lock()->getNeighborsAt(i).searchStationRecAt(destination,visitedStations,i);
     }
 
     return false;

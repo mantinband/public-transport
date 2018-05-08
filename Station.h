@@ -10,17 +10,20 @@
 #include <sstream>
 #include <set>
 #include "Neighbors.h"
+
 using namespace std;
 
 class Station {
-private:
-    Neighbors busNeighbors;
-    Neighbors tramNeighbors;
-    Neighbors sprinterNeighbors;
-    Neighbors railNeighbors;
-    string name;
 public:
+    const Neighbors *getNeighbors() const;
+    static const int NUM_OF_TRANSPORT_OPTIONS = 4;
+private:
+    Neighbors neighbors[NUM_OF_TRANSPORT_OPTIONS];
 
+    string name;
+
+
+public:
     explicit Station(string name);
     Station(Station &rhs);
     Station& operator=(Station &&rhs);
@@ -28,19 +31,23 @@ public:
     bool hasNeighborStation(const string &stationName) const;
     void setName(const string &name);
     string getName() const;
-    Neighbors & getBusNeighbors() ;
-    Neighbors & getTramNeighbors() ;
-    Neighbors & getSprinterNeighbors() ;
-    Neighbors & getRailNeighbors() ;
-    void updateConnection(const string &destinationNode, const int &duration);
-
-    void insertNeighborsToSetRec(shared_ptr<set<string>> neighborsSet, Neighbors neighbors) const;
-    string getBusRouteOptions() const;
-    string getTramRouteOptions() const;
-    string getSprinterRouteOptions() const;
-    string getRailRouteOptions() const;
-
+    void updateConnection(string destinationNode, int duration, int i);
     string getString(const shared_ptr<set<string>> &stationSet) const;
+    Neighbors &getNeighborsAt(const int &i) const;
+    string getRouteOptions(int i) const;
+    void insertNeighborsToSetRec(const shared_ptr<set<string>> &neighborsSet, Neighbors neighbors, int i) const;
+    static void addTransportPrefix(string &s, int i);
+
+
+    enum transportOptions{
+        bus,
+        tram,
+        sprinter,
+        rail
+    };
+
+    static int getIndexOfTransportForm(const string &s);
+
 };
 
 

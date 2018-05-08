@@ -14,31 +14,23 @@ void PublicTransport::load(shared_ptr<ifstream> inputFile,const string &fileName
     string destinationNode;
     string duration;
     char delimiter = '\t';
+
     while (getline(*inputFile, sourceNode, delimiter) &&
            getline(*inputFile, destinationNode, delimiter) &&
-           getline(*inputFile, duration)){
-        if (!isInStationList(sourceNode)){
+           getline(*inputFile, duration)) {
+        if (!isInStationList(sourceNode)) {
             addStation(sourceNode);
         }
-        if (!isInStationList(destinationNode)){
+        if (!isInStationList(destinationNode)) {
             addStation(destinationNode);
         }
-        if (getStation(sourceNode)->hasNeighborStation(destinationNode)){
-            getStation(sourceNode)->updateConnection(destinationNode,stoi(duration));
-        }else if (fileName.substr(0,3) == "bus"){
-            getStation(sourceNode)->getBusNeighbors().add(getStation(destinationNode), stoi(duration));
-            cout << "added bus connectino from " << sourceNode << " to " << destinationNode << endl;
-        } else if (fileName.substr(0,4) == "tram"){
-            getStation(sourceNode)->getTramNeighbors().add(getStation(destinationNode),stoi(duration));
-            cout << "added tram connectino from " << sourceNode << " to " << destinationNode << endl;
-        } else if (fileName.substr(0,8) == "sprinter"){
-            getStation(sourceNode)->getSprinterNeighbors().add(getStation(destinationNode),stoi(duration));
-            cout << "added sprinter connectino from " << sourceNode << " to " << destinationNode << endl;
-        } else if (fileName.substr(0,4) == "rail"){
-            getStation(sourceNode)->getRailNeighbors().add(getStation(destinationNode),stoi(duration));
-            cout << "added rail connectino from " << sourceNode << " to " << destinationNode << endl;
+
+        int i = Station::getIndexOfTransportForm(fileName);
+
+        if (getStation(sourceNode)->getNeighborsAt(i).contains(destinationNode)) {
+            getStation(sourceNode)->updateConnection(destinationNode, stoi(duration), i);
         } else {
-            throw invalidInputFileException();
+            getStation(sourceNode)->getNeighborsAt(i).add(getStation(destinationNode), stoi(duration));
         }
     }
 }
@@ -125,48 +117,47 @@ int PublicTransport::getNumberOfStations() {
 }
 
 string PublicTransport::outboundStations(const string &sourceNode) {
-    return "bus: " + getStation(sourceNode)->getBusRouteOptions()
-            + "\ntram: " + getStation(sourceNode)->getTramRouteOptions()
-            + "\nsprinter: " + getStation(sourceNode)->getSprinterRouteOptions()
-            + "\nrail: " + getStation(sourceNode)->getRailRouteOptions();
-
+    string res;
+    for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+        if (i != Station::NUM_OF_TRANSPORT_OPTIONS-1) {
+            res += getStation(sourceNode)->getRouteOptions(i) + "\n";
+        } else {
+            res += getStation(sourceNode)->getRouteOptions(i);
+        }
+    }
+    return res;
 }
 
 string PublicTransport::inboundStations(const string &destinationNode) {
-    string busTransportStations;
-    string tramTransportStations;
-    string sprinterTransportStations;
-    string railTransportStations;
+    string transportOptions[Station::NUM_OF_TRANSPORT_OPTIONS];
 
-    for (const auto &station : stationList){
+    for (const auto &station: stationList){
         if (station->getName() != destinationNode){
-            if (station->getBusNeighbors().searchBusStationRec(destinationNode, make_shared<set<string>>())) {
-                busTransportStations += station->getName() + " ";
-            }
-            if (station->getTramNeighbors().searchTramStationRec(destinationNode,make_shared<set<string>>())) {
-                tramTransportStations += station->getName() + " ";
-            }
-            if (station->getSprinterNeighbors().searchSprinterStationRec(destinationNode,make_shared<set<string>>())) {
-                sprinterTransportStations += station->getName() + " ";
-            }
-            if (station->getRailNeighbors().searchRailStationRec(destinationNode,make_shared<set<string>>())) {
-                railTransportStations += station->getName() + " ";
+            for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+                if (station->getNeighborsAt(i).searchStationRecAt(destinationNode, make_shared<set<string>>(),i)){
+                    transportOptions[i] += station->getName() + "\t";
+                }
             }
         }
     }
 
-    if (busTransportStations.empty()){
-        busTransportStations = "no outbound travel";
+    for (auto &routeOption : transportOptions){
+        if (routeOption.empty()){
+            routeOption = "no outbound travel";
+        }
     }
-    if (sprinterTransportStations.empty()){
-        sprinterTransportStations = "no outbound travel";
+
+    string res;
+
+    for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+        Station::addTransportPrefix(transportOptions[i],i);
+        if (i != Station::NUM_OF_TRANSPORT_OPTIONS-1){
+            res +=transportOptions[i] + "\n";
+        } else {
+            res += transportOptions[i];
+        }
     }
-    if (tramTransportStations.empty()){
-        tramTransportStations = "no outbound travel";
-    }
-    if (railTransportStations.empty()){
-        railTransportStations = "no outbound travel";
-    }
-    return "bus: " + busTransportStations + "\ntram: " + tramTransportStations + "\nsprinter: " + sprinterTransportStations + "\nrail: " + railTransportStations;
+
+    return res;
 }
 
