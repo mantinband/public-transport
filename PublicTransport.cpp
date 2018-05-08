@@ -107,8 +107,21 @@ PublicTransport::PublicTransport()
 {}
 
 void PublicTransport::printStationList() {
-    for (const auto &station: stationList){
-        cout << station->getName() << endl;
+
+    for (const auto &station : stationList){
+        cout << station->getName() << ":" <<  endl;
+        for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+            string transportPrefix;
+            Station::addTransportPrefix(transportPrefix,i);
+            string connections = station->getNeighborsAt(i).getConnections();
+            cout << transportPrefix;
+            if (!connections.empty()){
+                cout << connections << endl;
+            } else {
+                cout << "no connections" << endl;
+            }
+        }
+        cout << "----------------------------------" << endl;
     }
 }
 

@@ -23,7 +23,7 @@ public:
     const vector<pair<weak_ptr<Station>, int>> &getNeighbors() const;
     void setNeighbors(const vector<pair<weak_ptr<Station>, int>> &neighbors);
     bool searchStationRecAt(const string &destination, shared_ptr<set<string>> visitedStations, const int i) const;
-
+    string getConnections() const;
 private:
     vector<pair<weak_ptr<Station>,int>> neighbors;
 };

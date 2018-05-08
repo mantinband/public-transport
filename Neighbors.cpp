@@ -18,10 +18,11 @@ weak_ptr<Station> Neighbors::getStation(const string &stationToFind) const {
 bool Neighbors::updateConnection(const string &destinationNode, const int &duration) {
     pair<weak_ptr<Station>,int> route = getRoute(destinationNode);
 
-    if (route.first.lock() != nullptr) {
-        if (route.second > duration) {
-            route.second = duration;
-            return true;
+    for (auto &neighbor : neighbors) {
+        if (neighbor.first.lock()->getName() == destinationNode){
+            if (neighbor.second > duration){
+                neighbor.second = duration;
+            }
         }
     }
     return false;
@@ -33,9 +34,9 @@ void Neighbors::add(const shared_ptr<Station> &toAdd, const int &durationTime) {
 }
 
 const pair<weak_ptr<Station>, int> & Neighbors::getRoute(const string &stationName) const {
-    for (auto i = neighbors.begin(); i != neighbors.end(); i++){
-        if (i->first.lock()->getName() == stationName){
-            return *i;
+    for (const auto &neighbor : neighbors) {
+        if (neighbor.first.lock()->getName() == stationName){
+            return neighbor;
         }
     }
     return *(new pair<weak_ptr<Station>,int>());
@@ -61,5 +62,15 @@ bool Neighbors::searchStationRecAt(const string &destination, shared_ptr<set<str
     }
 
     return false;
+}
+
+string Neighbors::getConnections() const {
+    string res;
+
+    for (auto connection : neighbors){
+        res += connection.first.lock()->getName() + "(" + to_string(connection.second) + ") ";
+    }
+
+    return res;
 }
 
