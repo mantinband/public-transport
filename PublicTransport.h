@@ -33,6 +33,8 @@ public:
         }
     };
 
+    const vector<shared_ptr<Station>> &getStationList() const;
+
     struct invalidConfigurationFileException : exception {
         const char* what() const throw() override {
             return "ERROR opening configuration file.";

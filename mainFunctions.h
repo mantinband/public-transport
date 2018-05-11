@@ -18,6 +18,12 @@ enum inputOptions{
     invalidInput
 };
 
+enum argumentTypes{
+    none,
+    input,
+    configure,
+    output
+};
 inputOptions getOption(string input);
 
 #endif //OOP_CPP_EX2_MAINFUNCTIONS_H

@@ -6,6 +6,15 @@ CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o: ../CentralStation.h
 CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o: ../Neighbors.h
 CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o: ../Station.h
 
+CMakeFiles/OOP_CPP_EX2.dir/Express.cpp.o: ../CentralStation.h
+CMakeFiles/OOP_CPP_EX2.dir/Express.cpp.o: ../Express.cpp
+CMakeFiles/OOP_CPP_EX2.dir/Express.cpp.o: ../Express.h
+CMakeFiles/OOP_CPP_EX2.dir/Express.cpp.o: ../IntercityStation.h
+CMakeFiles/OOP_CPP_EX2.dir/Express.cpp.o: ../Neighbors.h
+CMakeFiles/OOP_CPP_EX2.dir/Express.cpp.o: ../PublicTransport.h
+CMakeFiles/OOP_CPP_EX2.dir/Express.cpp.o: ../StadStation.h
+CMakeFiles/OOP_CPP_EX2.dir/Express.cpp.o: ../Station.h
+
 CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.o: ../IntercityStation.cpp
 CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.o: ../IntercityStation.h
 CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.o: ../Neighbors.h
@@ -33,6 +42,7 @@ CMakeFiles/OOP_CPP_EX2.dir/Station.cpp.o: ../Station.cpp
 CMakeFiles/OOP_CPP_EX2.dir/Station.cpp.o: ../Station.h
 
 CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../CentralStation.h
+CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../Express.h
 CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../IntercityStation.h
 CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../Neighbors.h
 CMakeFiles/OOP_CPP_EX2.dir/main.cpp.o: ../PublicTransport.h

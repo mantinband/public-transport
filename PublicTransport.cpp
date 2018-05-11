@@ -174,3 +174,7 @@ string PublicTransport::inboundStations(const string &destinationNode) {
     return res;
 }
 
+const vector<shared_ptr<Station>> &PublicTransport::getStationList() const {
+    return stationList;
+}
+

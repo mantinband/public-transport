@@ -90,6 +90,12 @@
 		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/CentralStation.h">
 			<Option target="OOP_CPP_EX2"/>
 		</Unit>
+		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/Express.cpp">
+			<Option target="OOP_CPP_EX2"/>
+		</Unit>
+		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/Express.h">
+			<Option target="OOP_CPP_EX2"/>
+		</Unit>
 		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/IntercityStation.cpp">
 			<Option target="OOP_CPP_EX2"/>
 		</Unit>
