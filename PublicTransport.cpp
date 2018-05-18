@@ -268,7 +268,7 @@ string PublicTransport::uniExpressOptions(const string &source,const string &des
     return res;
 }
 
-int PublicTransport::multiExpressOptions(const string &source, const string &destination) {
+string PublicTransport::multiExpressOptions(const string &source, const string &destination) {
     string transportOptions[Station::NUM_OF_TRANSPORT_OPTIONS];
     vector<shared_ptr<pair<weak_ptr<Station>,pair<int,int>>>> stationVector;
 
@@ -276,8 +276,8 @@ int PublicTransport::multiExpressOptions(const string &source, const string &des
         //add node to vector and set as unvisited (MAX_INT)
         stationVector.push_back(std::make_shared<pair<weak_ptr<Station>,pair<int,int>>>(station,pair<int,int>(INT32_MAX,-1)));
     }
-    return getShortestMultiRoute(stationVector,source,destination);
-
+    int shortestRouteTime = getShortestMultiRoute(stationVector,source,destination);
+    return shortestRouteTime == -1 ? "route unavailable" : to_string(shortestRouteTime);
 }
 
 int PublicTransport::getShortestMultiRoute(vector<shared_ptr<pair<weak_ptr<Station>,pair<int,int>>>> stationVector,
@@ -305,6 +305,7 @@ int PublicTransport::getShortestMultiRoute(vector<shared_ptr<pair<weak_ptr<Stati
 
                 //when calculating distance, change time at station is taken into account
                 if (adjacentPair != stationVector.end()) {
+                    //delay time depends on whether or not transport type to next node is the same as to current node
                     int delayTime = delayTimeAtStation(*adjacentPair, curPair, i);
                     if ((*adjacentPair)->second.first > curPair->second.first + delayTime) {
                         (*adjacentPair)->second.first = curPair->second.first + route.second + delayTime;
@@ -340,14 +341,25 @@ int PublicTransport::getShortestMultiRoute(vector<shared_ptr<pair<weak_ptr<Stati
 
 int PublicTransport::delayTimeAtStation(shared_ptr<pair<weak_ptr<Station>, pair<int, int>>> &nextStation,
                                         shared_ptr<pair<weak_ptr<Station>, pair<int, int>>> currentStation, int i) {
-    if (nextStation->second.second == -1){
+
+    //if current node is source node
+    if (currentStation->second.second == -1){
         nextStation->second.second = i;
         return changeTime[i];
     }
+    //if next node hasn't been visited yet
+    if (nextStation->second.second == -1){
+        nextStation->second.second = i; //set next stations incoming transport type to current transport type
+        if (currentStation->second.second == -1){ //if transport type to current destination is same as current transport type or current node is source node
+            return changeTime[i];
+        }
+    }
+    //if transport to current node is different than to next node => add switch time
     if (currentStation->second.second != i){
         nextStation->second.second = i;
         return currentStation->first.lock()->getSwitchTransportTime();
     }
+    //else => return current transport wait time
     return changeTime[i];
 }
 

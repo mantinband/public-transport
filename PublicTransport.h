@@ -48,7 +48,7 @@ public:
 
 
     string uniExpressOptions(const string &source, const string &destination);
-    int multiExpressOptions(const string &source, const string &destination);
+    string multiExpressOptions(const string &source, const string &destination);
 private:
 
     shared_ptr<Station> getStation(const string &stationToFind);
