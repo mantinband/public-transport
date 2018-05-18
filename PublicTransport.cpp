@@ -188,6 +188,7 @@ string PublicTransport::uniExpressOptions(const string &source,const string &des
         vector<shared_ptr<pair<weak_ptr<Station>,int>>> stationVector;
 
         for (auto station : stationList){
+            //add node to vector and set as unvisited (MAX_INT)
             stationVector.push_back(std::make_shared<pair<weak_ptr<Station>,int>>(station,INT32_MAX));
         }
 
@@ -210,14 +211,19 @@ string PublicTransport::uniExpressOptions(const string &source,const string &des
 
 int PublicTransport::getShortestRoute(vector<shared_ptr<pair<weak_ptr<Station>, int>>> stationVector, const string &source, const string &destination,
                                       int i) {
+    //get iterator to source node
     auto sourceIterator = find_if(stationVector.begin(),stationVector.end(),
                                   [source](shared_ptr<std::pair<weak_ptr<Station>, int>> pair) {
                                       return source == pair->first.lock()->getName();
                                   });
     auto curPair = *sourceIterator;
+    //remove source node and set distance from source to 0
     stationVector.erase(sourceIterator);
     curPair->second = 0;
+
+    //while vector still has unvisited nodes
     while (!stationVector.empty()) {
+        //check all nodes adjacent to current node and update distance if a shorter path is found
         for (auto route : curPair->first.lock()->getNeighborsAt(i).getNeighbors()) {
             auto adjacentPair = *(find_if(stationVector.begin(), stationVector.end(),
                                           [route](shared_ptr<std::pair<weak_ptr<Station>, int>> pair) {
@@ -227,20 +233,17 @@ int PublicTransport::getShortestRoute(vector<shared_ptr<pair<weak_ptr<Station>, 
                 adjacentPair->second = curPair->second + route.second + changeTime[i];
             }
         }
-
+        //reorginize vector by shortest distance first
         sort(stationVector.begin(),stationVector.end(),[](shared_ptr<std::pair<weak_ptr<Station>, int>> p1,shared_ptr<std::pair<weak_ptr<Station>, int>> p2){
             return p1->second < p2->second;
         });
-
+        //current pair is updated to be the closest to the source node
         curPair = stationVector.at(0);
-        if (i == 0) {
-            cout << "vector size is" << stationVector.size() << endl;
-            cout << "after sort" << endl;
-            for (const auto &pair : stationVector) {
-                cout << pair->first.lock()->getName() << " " << pair->second << endl;
-            }
-        }
+
+        //closest node will not be visited again, hence- remove current node from vector
         stationVector.erase(stationVector.begin());
+        //if we have reached the destintion, and it has been marked
+        //as visited (meaning its value is smaller than MAX_INT it's destance is returned
         if (curPair->first.lock()->getName() == destination){
             if (curPair->second < INT32_MAX){
                 return curPair->second-changeTime[i];
