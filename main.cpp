@@ -107,8 +107,20 @@ int main(int argc, char **argv) {
                     cout << publicTransport.uniExpressOptions(sourceNode,destinationNode) << endl;
                 }
             } break;
-            case (multiExpress):
+            case (multiExpress): {
+                string sourceNode;
+                string destinationNode;
+
+                cin >> sourceNode >> destinationNode;
+                if (!publicTransport.isInStationList(sourceNode)) {
+                    cerr << sourceNode << " does not exist in the current network \n";
+                } else if (!publicTransport.isInStationList(destinationNode)) {
+                    cerr << destinationNode << " does not exist in the current network \n";
+                } else {
+                    cout << publicTransport.multiExpressOptions(sourceNode, destinationNode) << endl;
+                }
                 break;
+            }
             case (print):
                 publicTransport.printStationList();
                 break;

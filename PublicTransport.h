@@ -48,21 +48,30 @@ public:
 
 
     string uniExpressOptions(const string &source, const string &destination);
+    int multiExpressOptions(const string &source, const string &destination);
 private:
 
     shared_ptr<Station> getStation(const string &stationToFind);
     vector<shared_ptr<Station>> stationList;
     void addStation(const string &stationToAdd);
     int changeTime[Station::NUM_OF_TRANSPORT_OPTIONS];
-    int busChangeTime;
-    int tramChangeTime;
-    int sprinterChangeTime;
-    int railChangeTime;
-
     string outputFileName;
 
-    int getShortestRoute(vector<shared_ptr<pair<weak_ptr<Station>, int>>> source, const string &destination, const string &i,
-                             int i1);
+    int getShortestUniRoute(vector<shared_ptr<pair<weak_ptr<Station>, int>>> source,
+                            const string &destination, const string &i,
+                            int i1);
+
+    int getShortestMultiRoute(vector<shared_ptr<pair<weak_ptr<Station>,pair<int,int>>>> stationVector,
+                                               const string &source, const string &destination);
+
+    int delayTimeAtStation(shared_ptr<pair<weak_ptr<Station>, pair<int, int>>> &nextStation,
+                               shared_ptr<pair<weak_ptr<Station>, pair<int, int>>> currentStation, int i);
+
+    enum stationTypes{
+        central,
+        intercity,
+        stad
+    };
 };
 
 

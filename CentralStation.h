@@ -11,7 +11,10 @@
 class CentralStation : public Station{
 public:
     static const int DEFAULT_CHANGE_TIME;
-    CentralStation(const string &name);
+    explicit CentralStation(const string &name);
+    virtual StationTypes getStationType() const;
+    virtual int getSwitchTransportTime() const;
+
 private:
 public:
     static const int &getChangeTime();
@@ -19,7 +22,7 @@ public:
     static void setChangeTime(int changeTime);
 
 private:
-    static int changeTime;
+    static int CHANGE_TIME;
 };
 
 

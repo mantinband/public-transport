@@ -8,12 +8,20 @@ const int StadStation::DEFAULT_CHANGE_TIME = 10;
 
 StadStation::StadStation(const string &name) : Station(name) {
 }
-int StadStation::changeTime;
+int StadStation::CHANGE_TIME;
 
 int StadStation::getChangeTime() {
-    return changeTime;
+    return CHANGE_TIME;
 }
 
 void StadStation::setChangeTime(int changeTime) {
-    StadStation::changeTime = changeTime;
+    StadStation::CHANGE_TIME = changeTime;
+}
+
+Station::StationTypes StadStation::getStationType() const {
+    return stad;
+}
+
+int StadStation::getSwitchTransportTime() const {
+    return DEFAULT_CHANGE_TIME;
 }

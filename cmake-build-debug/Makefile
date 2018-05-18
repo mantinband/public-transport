@@ -150,33 +150,6 @@ CentralStation.cpp.s:
 	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.s
 .PHONY : CentralStation.cpp.s
 
-Express.o: Express.cpp.o
-
-.PHONY : Express.o
-
-# target to build an object file
-Express.cpp.o:
-	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/Express.cpp.o
-.PHONY : Express.cpp.o
-
-Express.i: Express.cpp.i
-
-.PHONY : Express.i
-
-# target to preprocess a source file
-Express.cpp.i:
-	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/Express.cpp.i
-.PHONY : Express.cpp.i
-
-Express.s: Express.cpp.s
-
-.PHONY : Express.s
-
-# target to generate assembly for a file
-Express.cpp.s:
-	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/Express.cpp.s
-.PHONY : Express.cpp.s
-
 IntercityStation.o: IntercityStation.cpp.o
 
 .PHONY : IntercityStation.o
@@ -378,9 +351,6 @@ help:
 	@echo "... CentralStation.o"
 	@echo "... CentralStation.i"
 	@echo "... CentralStation.s"
-	@echo "... Express.o"
-	@echo "... Express.i"
-	@echo "... Express.s"
 	@echo "... IntercityStation.o"
 	@echo "... IntercityStation.i"
 	@echo "... IntercityStation.s"

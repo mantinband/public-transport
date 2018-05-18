@@ -24,10 +24,20 @@ private:
 
 
 public:
+
+    typedef enum stationTypes{
+        central,
+        intercity,
+        stad
+    } StationTypes;
+
+
     explicit Station(string name);
     Station(Station &rhs);
     Station& operator=(Station &&rhs);
     virtual ~Station() = default;
+    virtual StationTypes getStationType() const = 0;
+    virtual int getSwitchTransportTime() const = 0;
     bool hasNeighborStation(const string &stationName) const;
     void setName(const string &name);
     string getName() const;
@@ -36,8 +46,9 @@ public:
     Neighbors &getNeighborsAt(const int &i) const;
     string getRouteOptions(int i) const;
     void insertNeighborsToSetRec(const shared_ptr<set<string>> &neighborsSet, Neighbors neighbors, int i) const;
-    static void addTransportPrefix(string &s, int i);
 
+
+    static void addTransportPrefix(string &s, int i);
 
     enum transportOptions{
         bus,

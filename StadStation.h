@@ -17,8 +17,11 @@ public:
 
     static void setChangeTime(int changeTime);
 
+    virtual StationTypes getStationType() const;
+    virtual int getSwitchTransportTime() const;
+
 private:
-    static int changeTime;
+    static int CHANGE_TIME;
 };
 
 

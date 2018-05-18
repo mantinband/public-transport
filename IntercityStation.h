@@ -12,8 +12,10 @@ class IntercityStation : public Station{
 public:
     static const int DEFAULT_CHANGE_TIME;
     explicit IntercityStation(const string &name);
+    virtual StationTypes getStationType() const;
+    virtual int getSwitchTransportTime() const;
 private:
-    static int changeTime;
+    static int CHANGE_TIME;
 public:
     static int getChangeTime();
     static void setChangeTime(int changeTime);
