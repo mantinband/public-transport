@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
                 try {
                     publicTransport.load(ifs, fileName);
                 } catch (PublicTransport::invalidInputFileException &e) {
-                    e.what();
+                    cerr << e.what() << endl;
                 }
             }   break;
             case (outbound): {

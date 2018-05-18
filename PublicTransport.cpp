@@ -221,29 +221,42 @@ int PublicTransport::getShortestRoute(vector<shared_ptr<pair<weak_ptr<Station>, 
     stationVector.erase(sourceIterator);
     curPair->second = 0;
 
+
     //while vector still has unvisited nodes
     while (!stationVector.empty()) {
         //check all nodes adjacent to current node and update distance if a shorter path is found
         for (auto route : curPair->first.lock()->getNeighborsAt(i).getNeighbors()) {
-            auto adjacentPair = *(find_if(stationVector.begin(), stationVector.end(),
+            auto adjacentPair = find_if(stationVector.begin(), stationVector.end(),
                                           [route](shared_ptr<std::pair<weak_ptr<Station>, int>> pair) {
                                               return route.first.lock()->getName() == pair->first.lock()->getName();
-                                          }));
-            if (adjacentPair->second > curPair->second + route.second + changeTime[i]) {
-                adjacentPair->second = curPair->second + route.second + changeTime[i];
+                                          });
+
+            //when calculating distance, change time at station is taken into account
+            if (adjacentPair != stationVector.end()) {
+                if ((*adjacentPair)->second > curPair->second + route.second + changeTime[i]) {
+                    (*adjacentPair)->second = curPair->second + route.second + changeTime[i];
+                }
             }
         }
-        //reorginize vector by shortest distance first
+
+        //reorganize vector by shortest distance first
         sort(stationVector.begin(),stationVector.end(),[](shared_ptr<std::pair<weak_ptr<Station>, int>> p1,shared_ptr<std::pair<weak_ptr<Station>, int>> p2){
             return p1->second < p2->second;
         });
+
         //current pair is updated to be the closest to the source node
         curPair = stationVector.at(0);
 
+        //if closest station hasn't been visited yet, it isn't reachable
+        if (curPair->second == INT32_MAX){
+            return -1;
+        }
+
         //closest node will not be visited again, hence- remove current node from vector
         stationVector.erase(stationVector.begin());
-        //if we have reached the destintion, and it has been marked
-        //as visited (meaning its value is smaller than MAX_INT it's destance is returned
+
+        //if we have reached the destination, and it has been marked
+        //as visited (meaning its value is smaller than MAX_INT it's distance is returned
         if (curPair->first.lock()->getName() == destination){
             if (curPair->second < INT32_MAX){
                 return curPair->second-changeTime[i];

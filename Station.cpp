@@ -118,8 +118,8 @@ void Station::addTransportPrefix(string &s, int i) {
 int Station::getIndexOfTransportForm(const string &s) {
     if (s.find("bus") == 0) return bus;
     if (s.find("tram") == 0) return tram;
-    if (s.find("sprinter")) return sprinter;
-    if (s.find("rail")) return rail;
+    if (s.find("sprinter") == 0) return sprinter;
+    if (s.find("rail") == 0) return rail;
 
     return -1;
 }
