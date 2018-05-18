@@ -2,6 +2,7 @@
 // Created by amichai on 05/05/18.
 //
 
+#include <algorithm>
 #include "PublicTransport.h"
 
 
@@ -53,13 +54,13 @@ void PublicTransport::configure(shared_ptr<ifstream> configureFile) {
         } else if (field == "central"){
             CentralStation::setChangeTime(stoi(value));
         } else if (field == "bus"){
-            busChangeTime = stoi(value);
+            changeTime[0] = stoi(value);
         } else if (field == "tram"){
-            tramChangeTime = stoi(value);
+            changeTime[1] = stoi(value);
         } else if (field == "sprinter"){
-            sprinterChangeTime = stoi(value);
+            changeTime[2] = stoi(value);
         } else if (field == "rail"){
-            railChangeTime = stoi(value);
+            changeTime[3] = stoi(value);
         } else {
             throw invalidConfigurationFileException();
         }
@@ -102,9 +103,12 @@ shared_ptr<Station> PublicTransport::getStation(const string &stationToFind) {
 
 const string PublicTransport::INTERCITY_PREFIX = "IC";
 const string PublicTransport::CENTRAL_PREFIX = "CS";
-PublicTransport::PublicTransport()
-:busChangeTime(2), tramChangeTime(3),sprinterChangeTime(4),railChangeTime(5)
-{}
+PublicTransport::PublicTransport() {
+    changeTime[0] = 2;
+    changeTime[1] = 3;
+    changeTime[2] = 4;
+    changeTime[3] = 5;
+}
 
 void PublicTransport::printStationList() {
 
@@ -176,5 +180,74 @@ string PublicTransport::inboundStations(const string &destinationNode) {
 
 const vector<shared_ptr<Station>> &PublicTransport::getStationList() const {
     return stationList;
+}
+
+string PublicTransport::uniExpressOptions(const string &source,const string &destination) {
+    string transportOptions[Station::NUM_OF_TRANSPORT_OPTIONS];
+    for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+        vector<shared_ptr<pair<weak_ptr<Station>,int>>> stationVector;
+
+        for (auto station : stationList){
+            stationVector.push_back(std::make_shared<pair<weak_ptr<Station>,int>>(station,INT32_MAX));
+        }
+
+        int shortestRoute = getShortestRoute(stationVector, source, destination, i);
+        transportOptions[i] += shortestRoute == -1 ? "route unavailable" : to_string(shortestRoute);
+    }
+    string res;
+
+    for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+        Station::addTransportPrefix(transportOptions[i],i);
+        if (i != Station::NUM_OF_TRANSPORT_OPTIONS-1){
+            res +=transportOptions[i] + "\n";
+        } else {
+            res += transportOptions[i];
+        }
+    }
+
+    return res;
+}
+
+int PublicTransport::getShortestRoute(vector<shared_ptr<pair<weak_ptr<Station>, int>>> stationVector, const string &source, const string &destination,
+                                      int i) {
+    auto sourceIterator = find_if(stationVector.begin(),stationVector.end(),
+                                  [source](shared_ptr<std::pair<weak_ptr<Station>, int>> pair) {
+                                      return source == pair->first.lock()->getName();
+                                  });
+    auto curPair = *sourceIterator;
+    stationVector.erase(sourceIterator);
+    curPair->second = 0;
+    while (!stationVector.empty()) {
+        for (auto route : curPair->first.lock()->getNeighborsAt(i).getNeighbors()) {
+            auto adjacentPair = *(find_if(stationVector.begin(), stationVector.end(),
+                                          [route](shared_ptr<std::pair<weak_ptr<Station>, int>> pair) {
+                                              return route.first.lock()->getName() == pair->first.lock()->getName();
+                                          }));
+            if (adjacentPair->second > curPair->second + route.second + changeTime[i]) {
+                adjacentPair->second = curPair->second + route.second + changeTime[i];
+            }
+        }
+
+        sort(stationVector.begin(),stationVector.end(),[](shared_ptr<std::pair<weak_ptr<Station>, int>> p1,shared_ptr<std::pair<weak_ptr<Station>, int>> p2){
+            return p1->second < p2->second;
+        });
+
+        curPair = stationVector.at(0);
+        if (i == 0) {
+            cout << "vector size is" << stationVector.size() << endl;
+            cout << "after sort" << endl;
+            for (const auto &pair : stationVector) {
+                cout << pair->first.lock()->getName() << " " << pair->second << endl;
+            }
+        }
+        stationVector.erase(stationVector.begin());
+        if (curPair->first.lock()->getName() == destination){
+            if (curPair->second < INT32_MAX){
+                return curPair->second-changeTime[i];
+            }
+            return -1;
+        }
+    }
+    return -1;
 }
 

@@ -45,16 +45,24 @@ public:
     int getNumberOfStations();
     string outboundStations(const string &sourceNode);
     string inboundStations(const string &destinationNode);
-private:
-    shared_ptr<Station> getStation(const string &stationToFind);
 
+
+    string uniExpressOptions(const string &source, const string &destination);
+private:
+
+    shared_ptr<Station> getStation(const string &stationToFind);
     vector<shared_ptr<Station>> stationList;
     void addStation(const string &stationToAdd);
+    int changeTime[Station::NUM_OF_TRANSPORT_OPTIONS];
     int busChangeTime;
     int tramChangeTime;
     int sprinterChangeTime;
     int railChangeTime;
+
     string outputFileName;
+
+    int getShortestRoute(vector<shared_ptr<pair<weak_ptr<Station>, int>>> source, const string &destination, const string &i,
+                             int i1);
 };
 
 

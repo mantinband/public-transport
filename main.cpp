@@ -4,7 +4,6 @@
 #include <memory>
 #include "mainFunctions.h"
 #include "PublicTransport.h"
-#include "Express.h"
 
 using namespace std;
 
@@ -96,12 +95,16 @@ int main(int argc, char **argv) {
                 }
             } break;
             case (uniExpress): {
-                Express express(publicTransport);
-                try {
-                    cout << express.uniSearch() << endl;
-                    express.printQueue();
-                } catch (exception &e) {
-                    cerr << e.what() << endl;
+                string sourceNode;
+                string destinationNode;
+
+                cin >> sourceNode >> destinationNode;
+                if (!publicTransport.isInStationList(sourceNode)){
+                    cerr << sourceNode << " does not exist in the current network \n";
+                } else if (!publicTransport.isInStationList(destinationNode)){
+                    cerr << destinationNode << " does not exist in the current network \n";
+                } else {
+                    cout << publicTransport.uniExpressOptions(sourceNode,destinationNode) << endl;
                 }
             } break;
             case (multiExpress):
