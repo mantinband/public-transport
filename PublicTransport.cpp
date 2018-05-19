@@ -247,7 +247,7 @@ string PublicTransport::uniExpressOptions(const string &source,const string &des
         vector<shared_ptr<pair<weak_ptr<Station>,int>>> stationVector;
 
         for (auto station : stationList){
-            //add node to vector and set as unvisited (MAX_INT)
+            //add node to vector and set as unvisited (i.e. distance from source node = MAX_INT)
             stationVector.push_back(std::make_shared<pair<weak_ptr<Station>,int>>(station,INT32_MAX));
         }
 
@@ -272,8 +272,10 @@ string PublicTransport::multiExpressOptions(const string &source, const string &
     string transportOptions[Station::NUM_OF_TRANSPORT_OPTIONS];
     vector<shared_ptr<pair<weak_ptr<Station>,pair<int,int>>>> stationVector;
 
+    //a node is defined as following: station, distance from source, incoming transport type
     for (auto station : stationList){
-        //add node to vector and set as unvisited (MAX_INT)
+        //add node to vector and set as unvisited (i.e. distance from source node = MAX_INT) and
+        //incoming transport type to none (i.e. -1)
         stationVector.push_back(std::make_shared<pair<weak_ptr<Station>,pair<int,int>>>(station,pair<int,int>(INT32_MAX,-1)));
     }
     int shortestRouteTime = getShortestMultiRoute(stationVector,source,destination);
@@ -296,18 +298,20 @@ int PublicTransport::getShortestMultiRoute(vector<shared_ptr<pair<weak_ptr<Stati
     //while vector still has unvisited nodes
     while (!stationVector.empty()) {
         //check all nodes adjacent to current node and update distance if a shorter path is found
+        //route is a pair that contains <adjacent station, travel time>
         for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++) {
             for (auto route : curPair->first.lock()->getNeighborsAt(i).getNeighbors()) {
+                //exctract adjacent node from station vector
                 auto adjacentPair = find_if(stationVector.begin(), stationVector.end(),
                                             [route](shared_ptr<std::pair<weak_ptr<Station>,std::pair<int,int>>> pair) {
                                                 return route.first.lock()->getName() == pair->first.lock()->getName();
                                             });
 
-                //when calculating distance, change time at station is taken into account
+                //if pair was found in vector
                 if (adjacentPair != stationVector.end()) {
                     //delay time depends on whether or not transport type to next node is the same as to current node
                     int delayTime = delayTimeAtStation(*adjacentPair, curPair, i);
-                    if ((*adjacentPair)->second.first > curPair->second.first + delayTime) {
+                    if ((*adjacentPair)->second.first > curPair->second.first + route.second + delayTime) {
                         (*adjacentPair)->second.first = curPair->second.first + route.second + delayTime;
                     }
                 }
@@ -324,7 +328,7 @@ int PublicTransport::getShortestMultiRoute(vector<shared_ptr<pair<weak_ptr<Stati
             return -1;
         }
 
-        //closest node will not be visited again, hence- remove current node from vector
+        //closest node will not be updated again, hence- remove current node from vector
         stationVector.erase(stationVector.begin());
 
         //if we have reached the destination, and it has been marked
@@ -338,7 +342,19 @@ int PublicTransport::getShortestMultiRoute(vector<shared_ptr<pair<weak_ptr<Stati
     }
     return -1;
 }
-
+/*
+ * @input: current station & next station
+ * @output: delay time at station
+ *
+ * if current transport type to next station
+ * is the same as to current station, then
+ * wait time for current transport type is
+ * returned. (i.e. bus:2, tram:3, sprinter:4, rail:5
+ *
+ * if not, returned value is the time taken to
+ * switch between transport types at current station
+ * (i.e. central: 5, stad: 10, intercity: 15,
+ * * */
 int PublicTransport::delayTimeAtStation(shared_ptr<pair<weak_ptr<Station>, pair<int, int>>> &nextStation,
                                         shared_ptr<pair<weak_ptr<Station>, pair<int, int>>> currentStation, int i) {
 
