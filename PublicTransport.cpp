@@ -184,10 +184,6 @@ string PublicTransport::inboundStations(const string &destinationNode) {
     return res;
 }
 
-const vector<shared_ptr<Station>> &PublicTransport::getStationList() const {
-    return stationList;
-}
-
 int PublicTransport::getShortestUniRoute(vector<shared_ptr<pair<weak_ptr<Station>, int>>> stationVector,
                                          const string &source, const string &destination,
                                          int i) {
@@ -410,3 +406,4 @@ void PublicTransport::printToFile() {
     outputFile.close();
 }
 
+PublicTransport::~PublicTransport() = default;

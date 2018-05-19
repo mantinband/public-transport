@@ -11,14 +11,6 @@ Station::Station(string name)
 :name(std::move(name))
 {}
 
-bool Station::hasNeighborStation(const string &stationName) const {
-    for (const Neighbors &n : neighbors){
-        if (n.contains(stationName)){
-            return true;
-        }
-    }
-    return false;
-}
 
 string Station::getName() const {
     return name;
@@ -30,11 +22,6 @@ Station::Station(Station &rhs) {
         neighbors[i] = rhs.getNeighborsAt(i);
     }
     name = rhs.getName();
-}
-
-
-void Station::setName(const string &name) {
-    Station::name = name;
 }
 
 Station & Station::operator=(Station &&rhs) {
@@ -93,9 +80,6 @@ string Station::getString(const shared_ptr<set<string>> &stationSet) const    {
     return stringResult;
 }
 
-const Neighbors *Station::getNeighbors() const {
-    return neighbors;
-}
 
 Neighbors &Station::getNeighborsAt(const int &i) const {
     return (Neighbors&)neighbors[i];

@@ -61,12 +61,12 @@ void loadDataFromArguments(PublicTransport &publicTransport, int argc, char **ar
                 default:
                     cerr << "Invalid arguments" << endl;
                     displayUsage();
-                    exit(1);
+                    exit(2);
             }
         }
     } catch (exception &e){
         cerr << e.what() << endl;
-        exit(2);
+        exit(3);
     } // end of load data
 
 }
