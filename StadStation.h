@@ -12,13 +12,17 @@ class StadStation : public Station{
 public:
     static const int DEFAULT_CHANGE_TIME;
     explicit StadStation(const string &name);
+    StadStation(string name, const Station &rhs);
+    ~StadStation() override;
+
+    /*  returns stad station enum value  */
+    StationTypes getStationType() const override;
+
+    /*  returns change time between transport options at station  */
+    int getSwitchTransportTime() const override;
 
     static int getChangeTime();
-
     static void setChangeTime(int changeTime);
-
-    virtual StationTypes getStationType() const;
-    virtual int getSwitchTransportTime() const;
 
 private:
     static int CHANGE_TIME;

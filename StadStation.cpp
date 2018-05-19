@@ -4,6 +4,8 @@
 
 #include "StadStation.h"
 
+#include <utility>
+
 const int StadStation::DEFAULT_CHANGE_TIME = 10;
 
 StadStation::StadStation(const string &name) : Station(name) {
@@ -25,3 +27,8 @@ Station::StationTypes StadStation::getStationType() const {
 int StadStation::getSwitchTransportTime() const {
     return DEFAULT_CHANGE_TIME;
 }
+
+StadStation::StadStation(string name, const Station &rhs) : Station(std::move(name)) {
+}
+
+StadStation::~StadStation() = default;

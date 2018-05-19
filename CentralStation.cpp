@@ -4,6 +4,8 @@
 
 #include "CentralStation.h"
 
+#include <utility>
+
 const int CentralStation::DEFAULT_CHANGE_TIME = 5;
 CentralStation::CentralStation(const string &name) : Station(name) {
 }
@@ -24,4 +26,9 @@ Station::StationTypes CentralStation::getStationType() const {
 int CentralStation::getSwitchTransportTime() const {
     return DEFAULT_CHANGE_TIME;
 }
+
+CentralStation::CentralStation(string name, Station &rhs) : Station(std::move(name)) {
+}
+
+CentralStation::~CentralStation() = default;
 

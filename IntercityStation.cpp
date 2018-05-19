@@ -4,6 +4,8 @@
 
 #include "IntercityStation.h"
 
+#include <utility>
+
 const int IntercityStation::DEFAULT_CHANGE_TIME = 15;
 IntercityStation::IntercityStation(const string &name) : Station(name){
 }
@@ -25,4 +27,10 @@ Station::StationTypes IntercityStation::getStationType() const {
 int IntercityStation::getSwitchTransportTime() const {
     return DEFAULT_CHANGE_TIME;
 }
+
+IntercityStation::IntercityStation(string name, Station &rhs) : Station(std::move(name)) {
+}
+
+
+IntercityStation::~IntercityStation() = default;
 

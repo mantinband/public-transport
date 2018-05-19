@@ -36,7 +36,8 @@ public:
     Station& operator=(Station &&rhs);
     virtual ~Station() = default;       //d'tor
 
-    virtual StationTypes getStationType() const = 0;    //returns central, intercity or stad
+    /*  returns central, intercity or stad  */
+    virtual StationTypes getStationType() const = 0;
     virtual int getSwitchTransportTime() const = 0;     //returns time to switch between transport options
 
     string getName() const;
