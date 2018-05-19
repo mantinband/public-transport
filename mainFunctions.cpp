@@ -83,6 +83,7 @@ void getPublicTransportQuerys(PublicTransport publicTransport) {
                 shared_ptr<ifstream> ifs(new ifstream(fileName));
                 try {
                     publicTransport.load(ifs, fileName);
+                    cout << "Update was successful." << endl;
                 } catch (PublicTransport::invalidInputFileException &e) {
                     cerr << e.what() << endl;
                 }
