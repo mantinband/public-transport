@@ -65,6 +65,7 @@ void PublicTransport::configure(shared_ptr<ifstream> configureFile) {
             throw invalidConfigurationFileException();
         }
     }
+    configureFile->close();
 }
 
 void PublicTransport::setOutputFile(string outputFileName) {
@@ -103,7 +104,10 @@ shared_ptr<Station> PublicTransport::getStation(const string &stationToFind) {
 
 const string PublicTransport::INTERCITY_PREFIX = "IC";
 const string PublicTransport::CENTRAL_PREFIX = "CS";
+const string PublicTransport::DEFAULT_OUTPUT_FILE_NAME = "output.dat";
+
 PublicTransport::PublicTransport() {
+    outputFileName = DEFAULT_OUTPUT_FILE_NAME;
     changeTime[0] = 2;
     changeTime[1] = 3;
     changeTime[2] = 4;
@@ -111,6 +115,8 @@ PublicTransport::PublicTransport() {
 }
 
 void PublicTransport::printStationList() {
+
+
 
     for (const auto &station : stationList){
         cout << station->getName() << ":" <<  endl;
@@ -377,5 +383,30 @@ int PublicTransport::delayTimeAtStation(shared_ptr<pair<weak_ptr<Station>, pair<
     }
     //else => return current transport wait time
     return changeTime[i];
+}
+
+void PublicTransport::printToFile() {
+    ofstream outputFile;
+    outputFile.open(outputFileName);
+    if (!outputFile.is_open()){
+        throw invalidOutputFileException();
+    }
+
+    for (const auto &station : stationList){
+        outputFile << station->getName() << ":" <<  endl;
+        for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+            string transportPrefix;
+            Station::addTransportPrefix(transportPrefix,i);
+            string connections = station->getNeighborsAt(i).getConnections();
+            outputFile << transportPrefix;
+            if (!connections.empty()){
+                outputFile << connections << endl;
+            } else {
+                outputFile << "no connections" << endl;
+            }
+        }
+        outputFile << "----------------------------------" << endl;
+    }
+    outputFile.close();
 }
 

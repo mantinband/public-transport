@@ -5,8 +5,10 @@
 #ifndef OOP_CPP_EX2_MAINFUNCTIONS_H
 #define OOP_CPP_EX2_MAINFUNCTIONS_H
 #include <iostream>
-using namespace std;
+#include <cstring>
+#include "PublicTransport.h"
 
+using namespace std;
 
 enum inputOptions{
     load,
@@ -24,6 +26,8 @@ enum argumentTypes{
     configure,
     output
 };
-inputOptions getOption(string input);
 
+inputOptions getOption(string input);
+void loadDataFromArguments(PublicTransport &publicTransport, int argc, char **argv);
+void getPublicTransportQuerys(PublicTransport publicTransport);
 #endif //OOP_CPP_EX2_MAINFUNCTIONS_H

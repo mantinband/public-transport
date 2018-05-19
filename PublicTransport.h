@@ -23,6 +23,7 @@ public:
     PublicTransport();
     static const string INTERCITY_PREFIX;
     static const string CENTRAL_PREFIX;
+    static const string DEFAULT_OUTPUT_FILE_NAME;
     void configure(std::shared_ptr<ifstream> configureFile);
     void setOutputFile(string outputFileName);
     void load(shared_ptr<ifstream> inputFile, const string &fileName);
@@ -40,7 +41,11 @@ public:
             return "ERROR opening configuration file.";
         }
     };
-
+    struct invalidOutputFileException : exception {
+        const char* what() const throw() override {
+            return "ERROR opening outpue file.";
+        }
+    };
     void printStationList();
     int getNumberOfStations();
     string outboundStations(const string &sourceNode);
@@ -49,6 +54,9 @@ public:
 
     string uniExpressOptions(const string &source, const string &destination);
     string multiExpressOptions(const string &source, const string &destination);
+
+    void printToFile();
+
 private:
 
     shared_ptr<Station> getStation(const string &stationToFind);
