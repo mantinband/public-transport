@@ -1,0 +1,12 @@
+bus: no inbound travel
+tram: Herengracht	Concertgebouw	Leidseplein	Amstel	Westzijde	Hooigracht	Prinsengracht
+sprinter: no inbound travel
+rail: no inbound travel
+bus: no outbound travel
+tram: Prinsengracht	Hooigracht	Westzijde	Amstel	Leidseplein	Concertgebouw	Herengracht 
+sprinter: no outbound travel
+rail: no outbound travel
+bus: 36
+tram: route unavailable
+sprinter: route unavailable
+rail: 27

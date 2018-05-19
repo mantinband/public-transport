@@ -115,9 +115,6 @@ PublicTransport::PublicTransport() {
 }
 
 void PublicTransport::printStationList() {
-
-
-
     for (const auto &station : stationList){
         cout << station->getName() << ":" <<  endl;
         for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){

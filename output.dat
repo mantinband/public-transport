@@ -1,0 +1,72 @@
+CSzuid:
+bus: CSnoord(34) 
+tram: no connections
+sprinter: no connections
+rail: CSwest(6) CSoost(8) 
+----------------------------------
+CSnoord:
+bus: CSzuid(36) 
+tram: no connections
+sprinter: no connections
+rail: CSwest(15) CSoost(17) 
+----------------------------------
+CScentraal:
+bus: no connections
+tram: Prinsengracht(4) 
+sprinter: no connections
+rail: no connections
+----------------------------------
+Prinsengracht:
+bus: no connections
+tram: Hooigracht(3) 
+sprinter: no connections
+rail: no connections
+----------------------------------
+Hooigracht:
+bus: no connections
+tram: Westzijde(4) 
+sprinter: no connections
+rail: no connections
+----------------------------------
+Westzijde:
+bus: no connections
+tram: Amstel(3) 
+sprinter: no connections
+rail: no connections
+----------------------------------
+Amstel:
+bus: no connections
+tram: Leidseplein(5) 
+sprinter: no connections
+rail: no connections
+----------------------------------
+Leidseplein:
+bus: no connections
+tram: Concertgebouw(4) 
+sprinter: no connections
+rail: no connections
+----------------------------------
+Concertgebouw:
+bus: no connections
+tram: Herengracht(7) 
+sprinter: no connections
+rail: no connections
+----------------------------------
+Herengracht:
+bus: no connections
+tram: CScentraal(8) 
+sprinter: no connections
+rail: no connections
+----------------------------------
+CSoost:
+bus: no connections
+tram: no connections
+sprinter: CSwest(12) 
+rail: CSzuid(9) CSnoord(16) 
+----------------------------------
+CSwest:
+bus: no connections
+tram: no connections
+sprinter: CSoost(12) 
+rail: CSzuid(7) CSnoord(14) 
+----------------------------------

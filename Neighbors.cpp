@@ -58,9 +58,9 @@ bool Neighbors::searchStationRecAt(const string &destination, shared_ptr<set<str
         if (visitedStations->find(station.first.lock()->getName()) != visitedStations->end()){
             return false;
         }
+        visitedStations->insert(station.first.lock()->getName());
         return station.first.lock()->getNeighborsAt(i).searchStationRecAt(destination,visitedStations,i);
     }
-
     return false;
 }
 
