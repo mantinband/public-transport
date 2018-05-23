@@ -425,8 +425,11 @@ const vector<shared_ptr<Station>> &PublicTransport::getStationList() const {
 }
 
 PublicTransport::PublicTransport(PublicTransport &&rhs) noexcept{
+    for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+        changeTime[i] = rhs.getChangeTime(i);
+    }
     stationList = rhs.getStationList();
-    rhs.setStationList(nullptr);
+    rhs.setStationList(vector<shared_ptr<Station>>());
 }
 
 void PublicTransport::setStationList(const vector<shared_ptr<Station>> &stationList) {
@@ -434,8 +437,12 @@ void PublicTransport::setStationList(const vector<shared_ptr<Station>> &stationL
 }
 
 PublicTransport &PublicTransport::operator=(PublicTransport &&rhs) noexcept {
+    for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+        changeTime[i] = rhs.getChangeTime(i);
+    }
+    outputFileName = rhs.getOutputFileName();
     stationList = rhs.getStationList();
-    rhs.setStationList(nullptr);
+    rhs.setStationList(vector<shared_ptr<Station>>());
     return *this;
 }
 

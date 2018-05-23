@@ -27,7 +27,7 @@ Station::Station(Station &rhs) {
 Station & Station::operator=(Station &&rhs) noexcept {
     for (int i=0; i<NUM_OF_TRANSPORT_OPTIONS; i++){
         neighbors[i] = rhs.getNeighborsAt(i);
-        rhs.setNeighborsAt(i, nullptr);
+        rhs.setNeighborsAt(i, Neighbors());
     }
     name = rhs.getName();
 
@@ -113,7 +113,7 @@ Station::Station(Station &&rhs) noexcept {
     name = rhs.getName();
     for (int i=0; i<NUM_OF_TRANSPORT_OPTIONS; i++){
         neighbors[i] = rhs.getNeighborsAt(i);
-        rhs.setNeighborsAt(i, nullptr);
+        rhs.setNeighborsAt(i, Neighbors());
     }
 }
 

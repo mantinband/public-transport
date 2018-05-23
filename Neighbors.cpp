@@ -77,16 +77,16 @@ Neighbors &Neighbors::operator=(const Neighbors &rhs) {
 
 Neighbors::Neighbors(Neighbors &&rhs) noexcept {
     neighbors = rhs.getNeighbors();
-    rhs.setNeighbors(nullptr);
+    rhs.setNeighbors(vector<pair<weak_ptr<Station>,int>>());
 }
 
-void Neighbors::setNeighbors(const vector<pair<weak_ptr<Station>, int>> &neighbors) {
+void Neighbors::setNeighbors(const vector<pair<weak_ptr<Station>, int>> neighbors) {
     Neighbors::neighbors = neighbors;
 }
 
 Neighbors &Neighbors::operator=(Neighbors &&rhs) noexcept {
     neighbors = rhs.getNeighbors();
-    rhs.setNeighbors(nullptr);
+    rhs.setNeighbors(vector<pair<weak_ptr<Station>,int>>());
     return *this;
 }
 
