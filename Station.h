@@ -33,7 +33,9 @@ public:
 
     explicit Station(string name);      //c'tor
     Station(Station &rhs);              //copy c'tor
-    Station& operator=(Station &&rhs);
+    Station(Station &&rhs) noexcept ;   //move c'tor
+    Station& operator=(const Station &rhs);
+    Station& operator=(Station &&rhs) noexcept;
     virtual ~Station() = default;       //d'tor
 
     /*  returns central, intercity or stad  */
@@ -41,6 +43,8 @@ public:
     virtual int getSwitchTransportTime() const = 0;     //returns time to switch between transport options
 
     string getName() const;
+
+    void setNeighborsAt(int i, Neighbors n);
 
     /*  returns string containing all stations the can be reached from current station  */
     string getRouteOptions(int i) const;

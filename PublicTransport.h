@@ -26,7 +26,14 @@ public:
 
     PublicTransport();      //c'tor
     PublicTransport(const PublicTransport &rhs) = default;  //copy c'tor
+    PublicTransport(PublicTransport &&rhs) noexcept;        //move c'tor
+    PublicTransport& operator=(const PublicTransport& rhs);
+    PublicTransport& operator=(PublicTransport&& rhs) noexcept;
     virtual ~PublicTransport();     //d'tor
+
+    int getChangeTime(int i) const;
+    const string &getOutputFileName() const;
+    const vector<shared_ptr<Station>> &getStationList() const;
 
     /*  re-configures change time between transport options and wait
      * time at station for transport option according to given file */
@@ -95,8 +102,9 @@ public:
         }
     };
 
-private:
+    void setStationList(const vector<shared_ptr<Station>> &stationList);
 
+private:
     int changeTime[Station::NUM_OF_TRANSPORT_OPTIONS];
     string outputFileName;
     vector<shared_ptr<Station>> stationList;

@@ -403,4 +403,40 @@ void PublicTransport::printToFile() {
     outputFile.close();
 }
 
+PublicTransport &PublicTransport::operator=(const PublicTransport &rhs) {
+    for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+        changeTime[i] = rhs.getChangeTime(i);
+    }
+    outputFileName = rhs.getOutputFileName();
+    stationList = rhs.getStationList();
+    return *this;
+}
+
+int PublicTransport::getChangeTime(int i) const {
+    return changeTime[i];
+}
+
+const string &PublicTransport::getOutputFileName() const {
+    return outputFileName;
+}
+
+const vector<shared_ptr<Station>> &PublicTransport::getStationList() const {
+    return stationList;
+}
+
+PublicTransport::PublicTransport(PublicTransport &&rhs) noexcept{
+    stationList = rhs.getStationList();
+    rhs.setStationList(nullptr);
+}
+
+void PublicTransport::setStationList(const vector<shared_ptr<Station>> &stationList) {
+    PublicTransport::stationList = stationList;
+}
+
+PublicTransport &PublicTransport::operator=(PublicTransport &&rhs) noexcept {
+    stationList = rhs.getStationList();
+    rhs.setStationList(nullptr);
+    return *this;
+}
+
 PublicTransport::~PublicTransport() = default;

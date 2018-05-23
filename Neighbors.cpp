@@ -46,10 +46,6 @@ const vector<pair<weak_ptr<Station>, int>> &Neighbors::getNeighbors() const {
     return neighbors;
 }
 
-void Neighbors::setNeighbors(const vector<pair<weak_ptr<Station>, int>> &neighbors) {
-    Neighbors::neighbors = neighbors;
-}
-
 bool Neighbors::searchStationRecAt(const string &destination, shared_ptr<set<string>> visitedStations, const int i) const {
     for (auto station : neighbors){
         if (station.first.lock()->getName() == destination){
@@ -73,4 +69,30 @@ string Neighbors::getConnections() const {
 
     return res;
 }
+
+Neighbors &Neighbors::operator=(const Neighbors &rhs) {
+    neighbors = rhs.getNeighbors();
+    return *this;
+}
+
+Neighbors::Neighbors(Neighbors &&rhs) noexcept {
+    neighbors = rhs.getNeighbors();
+    rhs.setNeighbors(nullptr);
+}
+
+void Neighbors::setNeighbors(const vector<pair<weak_ptr<Station>, int>> &neighbors) {
+    Neighbors::neighbors = neighbors;
+}
+
+Neighbors &Neighbors::operator=(Neighbors &&rhs) noexcept {
+    neighbors = rhs.getNeighbors();
+    rhs.setNeighbors(nullptr);
+    return *this;
+}
+
+Neighbors::Neighbors() = default;
+
+Neighbors::~Neighbors() = default;
+
+Neighbors::Neighbors(const Neighbors &rhs) = default;
 

@@ -24,9 +24,10 @@ Station::Station(Station &rhs) {
     name = rhs.getName();
 }
 
-Station & Station::operator=(Station &&rhs) {
+Station & Station::operator=(Station &&rhs) noexcept {
     for (int i=0; i<NUM_OF_TRANSPORT_OPTIONS; i++){
         neighbors[i] = rhs.getNeighborsAt(i);
+        rhs.setNeighborsAt(i, nullptr);
     }
     name = rhs.getName();
 
@@ -106,6 +107,26 @@ int Station::getIndexOfTransportForm(const string &s) {
     if (s.find("rail") == 0) return rail;
 
     return -1;
+}
+
+Station::Station(Station &&rhs) noexcept {
+    name = rhs.getName();
+    for (int i=0; i<NUM_OF_TRANSPORT_OPTIONS; i++){
+        neighbors[i] = rhs.getNeighborsAt(i);
+        rhs.setNeighborsAt(i, nullptr);
+    }
+}
+
+void Station::setNeighborsAt(int i, Neighbors n) {
+    neighbors[i] = n;
+}
+
+Station &Station::operator=(const Station &rhs) {
+    name = rhs.getName();
+    for (int i=0; i<NUM_OF_TRANSPORT_OPTIONS; i++){
+        neighbors[i] = rhs.getNeighborsAt(i);
+    }
+    return *this;
 }
 
 

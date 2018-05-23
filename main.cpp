@@ -9,6 +9,8 @@ int main(int argc, char **argv) {
     //get user querys
     getPublicTransportQuerys(publicTransport);
 
+
+
     return 0;
 }
 
