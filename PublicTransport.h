@@ -110,14 +110,6 @@ private:
     vector<shared_ptr<Station>> stationList;
     void addStation(const string &stationToAdd);
 
-
-    /*  returns shortest duration from source node
-     * to destination node via chosen transport option    */
-    int getShortestUniRoute(vector<shared_ptr<pair<weak_ptr<Station>, int>>> stationVector,
-                            const string &source, const string &destination,
-                            int i);
-
-
     /*  returns given station   */
     shared_ptr<Station> getStation(const string &stationToFind);
 
@@ -130,8 +122,9 @@ private:
     const int &getWaitTime(int i);
 
     int
-    getShortestMultiRoute(shared_ptr<vector<shared_ptr<pair<weak_ptr<Station>, int>>>> stationsVector, const string &source,
-                          const string &destination);
+    getShortestRoute(shared_ptr<vector<shared_ptr<pair<weak_ptr<Station>, int>>>> stationsVector,
+                         basic_string<char, char_traits<char>, allocator<char>> source, const string &destination, int i,
+                         bool useChangeTime);
 };
 
 
