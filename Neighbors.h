@@ -22,7 +22,7 @@ public:
     Neighbors& operator=(Neighbors &&rhs) noexcept;
     virtual ~Neighbors();       //d'tor
 
-    void setNeighbors(const vector<pair<weak_ptr<Station>, int>> neighbors);
+    void setNeighbors(vector<pair<weak_ptr<Station>, int>> neighbors);
 
     /*  add connection. connection is defined as a pair of
      * <destination station, travel time>   */

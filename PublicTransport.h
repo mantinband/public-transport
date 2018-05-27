@@ -117,27 +117,21 @@ private:
                             const string &source, const string &destination,
                             int i);
 
-    /*  returns shortest duration from source node to destination
-     * node with switching between transport options */
-    int getShortestMultiRoute(vector<shared_ptr<pair<weak_ptr<Station>,pair<int,int>>>> stationVector,
-                                               const string &source, const string &destination);
-
-    /* returns the delay at current station.
-     * if current transport type to next station
-     * is the same as to current station, then
-     * wait time for current transport type is
-     * returned. (i.e. bus:2, tram:3, sprinter:4, rail:5
-     *
-     * if not, returned value is the time taken to
-     * switch between transport types at current station
-     * (i.e. central: 5, stad: 10, intercity: 15,
-     * * */
-    int delayTimeAtStation(shared_ptr<pair<weak_ptr<Station>, pair<int, int>>> &nextStation,
-                               shared_ptr<pair<weak_ptr<Station>, pair<int, int>>> currentStation, int i);
 
     /*  returns given station   */
     shared_ptr<Station> getStation(const string &stationToFind);
 
+    shared_ptr<Station> getExitStation(string stationName, shared_ptr<vector<shared_ptr<Station >>> graph, int i);
+
+    string getPrefix(int i);
+
+    shared_ptr<Station> getEnterStation(string stationName, shared_ptr<vector<shared_ptr<Station>>> graph, int i);
+
+    const int &getWaitTime(int i);
+
+    int
+    getShortestMultiRoute(shared_ptr<vector<shared_ptr<pair<weak_ptr<Station>, int>>>> stationsVector, const string &source,
+                          const string &destination);
 };
 
 

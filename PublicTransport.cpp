@@ -268,115 +268,70 @@ string PublicTransport::uniExpressOptions(const string &source,const string &des
 }
 
 string PublicTransport::multiExpressOptions(const string &source, const string &destination) {
-    string transportOptions[Station::NUM_OF_TRANSPORT_OPTIONS];
-    vector<shared_ptr<pair<weak_ptr<Station>,pair<int,int>>>> stationVector;
+    shared_ptr<vector<shared_ptr<Station>>> newGraph = std::make_shared<vector<shared_ptr<Station>>>();
 
-    //a node is defined as following: station, distance from source, incoming transport type
-    for (auto station : stationList){
-        //add node to vector and set as unvisited (i.e. distance from source node = MAX_INT) and
-        //incoming transport type to none (i.e. -1)
-        stationVector.push_back(std::make_shared<pair<weak_ptr<Station>,pair<int,int>>>(station,pair<int,int>(INT32_MAX,-1)));
+    /*  create new graph in which each node is devided to 8 new nodes.
+     *  4 entry nodes and 4 exit nodes. while building the graph
+     *  connections are added between the entry node to the exit
+     *  node with the wait time of transport at station (i.e. bus:2 tram:3 etc'*/
+    for (const auto &station : stationList) {
+        for (int i=0; i <Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+            shared_ptr<Station> enter;
+            shared_ptr<Station> exit;
+
+            enter = shared_ptr<Station>(new IntercityStation(station->getName()+"Enter"+getPrefix(i)));
+            exit = shared_ptr<Station>(new IntercityStation(station->getName()+"Exit" + getPrefix(i)));
+
+            enter->getNeighborsAt(0).add(exit,getWaitTime(i));
+
+            newGraph->push_back(enter);
+            newGraph->push_back(exit);
+        }
     }
-    int shortestRouteTime = getShortestMultiRoute(stationVector,source,destination);
-    return shortestRouteTime == -1 ? "route unavailable" : to_string(shortestRouteTime);
-}
+    /*  connection are added to graph as following :
+     *  if current station's name is "a" and i equals 1 then
+     *  the station named "aExitStad" is fetched.
+     *  if "a" is connected to "b" with a weight of 5, then
+     *  "aExitStad" is connected to bEnterStad with a weight of 5
+     *  "bEnterStad" is then connected to "bExitBus", "bExitTram",
+     *  and "bExitSprinter" with a weight of 15.
+     *  ("bEnterStad" is connected to "bExitStad" with a weight of
+     *  5 from previous loop)*/
 
-int PublicTransport::getShortestMultiRoute(vector<shared_ptr<pair<weak_ptr<Station>,pair<int,int>>>> stationVector,
-                                           const string &source, const string &destination) {
-    //get iterator to source node
-    auto sourceIterator = find_if(stationVector.begin(),stationVector.end(),
-                                  [source](shared_ptr<pair<weak_ptr<Station>,pair<int,int>>> pair) {
-                                      return source == pair->first.lock()->getName();
-                                  });
-    auto curPair = *sourceIterator;
-
-    //remove source node and set distance from source to 0
-    stationVector.erase(sourceIterator);
-    curPair->second.first = 0;
-
-    //while vector still has unvisited nodes
-    while (!stationVector.empty()) {
-        //check all nodes adjacent to current node and update distance if a shorter path is found
-        //route is a pair that contains <adjacent station, travel time>
+    for (const auto &station : stationList){
         for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++) {
-            for (auto route : curPair->first.lock()->getNeighborsAt(i).getNeighbors()) {
-                //exctract adjacent node from station vector
-                auto adjacentPair = find_if(stationVector.begin(), stationVector.end(),
-                                            [route](shared_ptr<std::pair<weak_ptr<Station>,std::pair<int,int>>> pair) {
-                                                return route.first.lock()->getName() == pair->first.lock()->getName();
-                                            });
+            for (auto connection : station->getNeighborsAt(i).getNeighbors()){
 
-                //if pair was found in vector
-                if (adjacentPair != stationVector.end()) {
-                    //delay time depends on whether or not transport type to next node is the same as to current node
-                    int delayTime = delayTimeAtStation(*adjacentPair, curPair, i);
-                    if ((*adjacentPair)->second.first > curPair->second.first + route.second + delayTime) {
-                        (*adjacentPair)->second.first = curPair->second.first + route.second + delayTime;
+                shared_ptr<Station> exitOrigin = getExitStation(station->getName(),newGraph,i);
+                shared_ptr<Station> enterDestination = getEnterStation(connection.first.lock()->getName(),newGraph,i);
+
+                exitOrigin->getNeighborsAt(0).add(enterDestination,connection.second);
+                for (int j=0; j<Station::NUM_OF_TRANSPORT_OPTIONS; j++){
+                    if (i != j){
+                        shared_ptr<Station> exitDestination = getExitStation(connection.first.lock()->getName(),newGraph,i);
+                        enterDestination->getNeighborsAt(0).add(exitDestination,station->getSwitchTransportTime());
                     }
                 }
             }
         }
-        //reorganize vector by shortest distance first
-        sort(stationVector.begin(),stationVector.end(),[](shared_ptr<std::pair<weak_ptr<Station>, std::pair<int,int>>> p1,shared_ptr<std::pair<weak_ptr<Station>, std::pair<int,int>>> p2){
-            return p1->second.first < p2->second.first;
-        });
-        //current pair is updated to be the closest to the source node
-        curPair = stationVector.at(0);
-        //if closest station hasn't been visited yet, it isn't reachable
-        if (curPair->second.first == INT32_MAX){
-            return -1;
-        }
+    }
 
-        //closest node will not be updated again, hence- remove current node from vector
-        stationVector.erase(stationVector.begin());
+    shared_ptr<vector<shared_ptr<pair<weak_ptr<Station>,int>>>> newStationsVector = std::make_shared<vector<shared_ptr<pair<weak_ptr<Station>,int>>>>();
+    for (auto station : *newGraph){
+        newStationsVector->push_back(std::make_shared<pair<weak_ptr<Station>,int>>(station,INT32_MAX));
+    }
 
-        //if we have reached the destination, and it has been marked
-        //as visited (meaning its value is smaller than MAX_INT it's distance is returned
-        if (curPair->first.lock()->getName() == destination){
-            if (curPair->second.first < INT32_MAX){
-                return curPair->second.first-changeTime[curPair->second.second];
-            }
-            return -1;
+    int shortestMultiRoute = INT32_MAX;
+    for (int i=0; i<Station::NUM_OF_TRANSPORT_OPTIONS; i++){
+        int currentMultiRouteWeight =  getShortestMultiRoute(newStationsVector,source+"Exit"+getPrefix(i),destination);
+        if (currentMultiRouteWeight < shortestMultiRoute){
+            shortestMultiRoute = currentMultiRouteWeight;
         }
     }
-    return -1;
+
+    return shortestMultiRoute == -1 ? "route unavailable" : to_string(shortestMultiRoute);
 }
-/*
- * @input: current station & next station
- * @output: delay time at station
- *
- * if current transport type to next station
- * is the same as to current station, then
- * wait time for current transport type is
- * returned. (i.e. bus:2, tram:3, sprinter:4, rail:5
- *
- * if not, returned value is the time taken to
- * switch between transport types at current station
- * (i.e. central: 5, stad: 10, intercity: 15,
- * * */
-int PublicTransport::delayTimeAtStation(shared_ptr<pair<weak_ptr<Station>, pair<int, int>>> &nextStation,
-                                        shared_ptr<pair<weak_ptr<Station>, pair<int, int>>> currentStation, int i) {
 
-    //if current node is source node
-    if (currentStation->second.second == -1){
-        nextStation->second.second = i;
-        return changeTime[i];
-    }
-    //if next node hasn't been visited yet
-    if (nextStation->second.second == -1){
-        nextStation->second.second = i; //set next stations incoming transport type to current transport type
-        if (currentStation->second.second == -1){ //if transport type to current destination is same as current transport type or current node is source node
-            return changeTime[i];
-        }
-    }
-    //if transport to current node is different than to next node => add switch time
-    if (currentStation->second.second != i){
-        nextStation->second.second = i;
-        return currentStation->first.lock()->getSwitchTransportTime();
-    }
-    //else => return current transport wait time
-    return changeTime[i];
-}
 
 void PublicTransport::printToFile() {
     ofstream outputFile;
@@ -445,5 +400,97 @@ PublicTransport &PublicTransport::operator=(PublicTransport &&rhs) noexcept {
     rhs.setStationList(vector<shared_ptr<Station>>());
     return *this;
 }
+
+shared_ptr<Station> PublicTransport::getExitStation(string stationName,
+                                                    shared_ptr<vector<shared_ptr<Station >>> graph, int i) {
+    for (auto &station : *graph){
+        if (station->getName() == stationName + "Exit" + getPrefix(i)){
+            return station;
+        }
+    }
+
+    return shared_ptr<Station>();
+}
+
+string PublicTransport::getPrefix(int i){
+    if (i == 0) return "Bus";
+    if (i == 1) return "Tram";
+    if (i == 2) return "Sprinter";
+    if (i == 3) return "Stad";
+    return "";
+}
+
+shared_ptr<Station>
+PublicTransport::getEnterStation(string stationName, shared_ptr<vector<shared_ptr<Station>>> graph, int i) {
+    for (auto &station : *graph){
+        if (station->getName() == stationName + "Enter" + getPrefix(i)){
+            return station;
+        }
+    }
+    return shared_ptr<Station>();
+}
+
+const int &PublicTransport::getWaitTime(int i) {
+    return changeTime[i];
+}
+
+int PublicTransport::getShortestMultiRoute(shared_ptr<vector<shared_ptr<pair<weak_ptr<Station>, int>>>> stationVector,
+                                           const string &source, const string &destination) {
+//get iterator to source node
+    auto sourceIterator = find_if(stationVector->begin(),stationVector->end(),
+                                  [source](shared_ptr<std::pair<weak_ptr<Station>, int>> pair) {
+                                      return source == pair->first.lock()->getName();
+                                  });
+    auto curPair = *sourceIterator;
+    //remove source node and set distance from source to 0
+    stationVector->erase(sourceIterator);
+    curPair->second = 0;
+
+
+    //while vector still has unvisited nodes
+    while (!stationVector->empty()) {
+        //check all nodes adjacent to current node and update distance if a shorter path is found
+        for (auto route : curPair->first.lock()->getNeighborsAt(0).getNeighbors()) {
+            auto adjacentPair = find_if(stationVector->begin(), stationVector->end(),
+                                        [route](shared_ptr<std::pair<weak_ptr<Station>, int>> pair) {
+                                            return route.first.lock()->getName() == pair->first.lock()->getName();
+                                        });
+
+            //when calculating distance, change time at station is taken into account
+            if (adjacentPair != stationVector->end()) {
+                if ((*adjacentPair)->second > curPair->second + route.second) {
+                    (*adjacentPair)->second = curPair->second + route.second;
+                }
+            }
+        }
+
+        //reorganize vector by shortest distance first
+        sort(stationVector->begin(),stationVector->end(),[](shared_ptr<std::pair<weak_ptr<Station>, int>> p1,shared_ptr<std::pair<weak_ptr<Station>, int>> p2){
+            return p1->second < p2->second;
+        });
+
+        //current pair is updated to be the closest to the source node
+        curPair = stationVector->at(0);
+
+        //if closest station hasn't been visited yet, it isn't reachable
+        if (curPair->second == INT32_MAX){
+            return INT32_MAX;
+        }
+
+        //closest node will not be visited again, hence- remove current node from vector
+        stationVector->erase(stationVector->begin());
+
+        //if we have reached the destination, and it has been marked
+        //as visited (meaning its value is smaller than MAX_INT it's distance is returned
+        if (curPair->first.lock()->getName().find(destination) != string::npos){
+            if (curPair->second < INT32_MAX){
+                return curPair->second;
+            }
+            return INT32_MAX;
+        }
+    }
+    return INT32_MAX;
+}
+
 
 PublicTransport::~PublicTransport() = default;
