@@ -214,6 +214,7 @@ string PublicTransport::multiExpressOptions(const string &source, const string &
     shared_ptr<vector<shared_ptr<Station>>> newGraph = std::make_shared<vector<shared_ptr<Station>>>();
 
     /*  create new graph in which each node is devided to 8 new nodes.
+     *  ew graph adds new connection to transport vector at neighbors[0] only
      *  4 entry nodes and 4 exit nodes. while building the graph
      *  connections are added between the entry node to the exit
      *  node with the wait time of transport at station (i.e. bus:2 tram:3 etc'*/
@@ -381,7 +382,7 @@ const int &PublicTransport::getWaitTime(int i) {
 }
 
 int PublicTransport::getShortestRoute(shared_ptr<vector<shared_ptr<pair<weak_ptr<Station>, int>>>> stationVector,
-                                      basic_string<char, char_traits<char>, allocator<char>> source, const string &destination, int i,
+                                      const string &source, const string &destination, int i,
                                       bool useChangeTime) {
     //get iterator to source node
     auto sourceIterator = find_if(stationVector->begin(),stationVector->end(),
@@ -404,15 +405,13 @@ int PublicTransport::getShortestRoute(shared_ptr<vector<shared_ptr<pair<weak_ptr
                                         });
 
             //when calculating distance, change time at station is taken into account
+            int distanceWeight = curPair->second + route.second;
+            if (useChangeTime) {
+                distanceWeight += changeTime[i];
+            }
             if (adjacentPair != stationVector->end()) {
-                if (useChangeTime){
-                    if ((*adjacentPair)->second > curPair->second + route.second + changeTime[i]) {
-                        (*adjacentPair)->second = curPair->second + route.second + changeTime[i];
-                    }
-                } else {
-                    if ((*adjacentPair)->second > curPair->second + route.second) {
-                        (*adjacentPair)->second = curPair->second + route.second;
-                    }
+                if ((*adjacentPair)->second > distanceWeight){
+                    (*adjacentPair)->second  = distanceWeight;
                 }
             }
         }

@@ -108,22 +108,29 @@ private:
     int changeTime[Station::NUM_OF_TRANSPORT_OPTIONS];
     string outputFileName;
     vector<shared_ptr<Station>> stationList;
+
+    /*  adds station to station list    */
     void addStation(const string &stationToAdd);
 
     /*  returns given station   */
     shared_ptr<Station> getStation(const string &stationToFind);
 
+    /*  used by multiExpress, returns exit node for given station name and transport type   */
     shared_ptr<Station> getExitStation(string stationName, shared_ptr<vector<shared_ptr<Station >>> graph, int i);
 
+    /*  returns transport type prefix (i.e. "Bus", "Tram" etc') */
     string getPrefix(int i);
 
+    /*  used by multiExpress, returns entry node for given station name and transport type   */
     shared_ptr<Station> getEnterStation(string stationName, shared_ptr<vector<shared_ptr<Station>>> graph, int i);
 
+    /*  returns wait time at station for given transport time (i.e. bus: 2, tram:3) etc'    */
     const int &getWaitTime(int i);
 
-    int
-    getShortestRoute(shared_ptr<vector<shared_ptr<pair<weak_ptr<Station>, int>>>> stationsVector,
-                         basic_string<char, char_traits<char>, allocator<char>> source, const string &destination, int i,
+     /* @input: graph, source node, destination node, transport type and if change time is taken into account
+     *  @output: shortest travel time if found, INT32_MAX if not. */
+    int getShortestRoute(shared_ptr<vector<shared_ptr<pair<weak_ptr<Station>, int>>>> stationsVector,
+                         const string &source, const string &destination, int i,
                          bool useChangeTime);
 };
 
