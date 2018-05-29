@@ -27,7 +27,7 @@ Station::Station(Station &rhs) {
 Station & Station::operator=(Station &&rhs) noexcept {
     for (int i=0; i<NUM_OF_TRANSPORT_OPTIONS; i++){
         neighbors[i] = rhs.getNeighborsAt(i);
-        rhs.setNeighborsAt(i, Neighbors());
+        rhs.setNeighborsAt(i, AdjacentStations());
     }
     name = rhs.getName();
 
@@ -56,7 +56,7 @@ string Station::getRouteOptions(const int i) const {
 }
 
 
-void Station::insertNeighborsToSetRec(const shared_ptr<set<string>> &neighborsSet, Neighbors neighbors, const int i) const {
+void Station::insertNeighborsToSetRec(const shared_ptr<set<string>> &neighborsSet, AdjacentStations neighbors, const int i) const {
     if (neighborsSet->find(name) != neighborsSet->end()){
         return;
     }
@@ -82,8 +82,8 @@ string Station::getString(const shared_ptr<set<string>> &stationSet) const    {
 }
 
 
-Neighbors &Station::getNeighborsAt(const int &i) const {
-    return (Neighbors&)neighbors[i];
+AdjacentStations &Station::getNeighborsAt(const int &i) const {
+    return (AdjacentStations&)neighbors[i];
 }
 
 void Station::addTransportPrefix(string &s, int i) {
@@ -113,11 +113,11 @@ Station::Station(Station &&rhs) noexcept {
     name = rhs.getName();
     for (int i=0; i<NUM_OF_TRANSPORT_OPTIONS; i++){
         neighbors[i] = rhs.getNeighborsAt(i);
-        rhs.setNeighborsAt(i, Neighbors());
+        rhs.setNeighborsAt(i, AdjacentStations());
     }
 }
 
-void Station::setNeighborsAt(int i, Neighbors n) {
+void Station::setNeighborsAt(int i, AdjacentStations n) {
     neighbors[i] = n;
 }
 

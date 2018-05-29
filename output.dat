@@ -1,27 +1,3 @@
-Kash:
-bus: Koach(1) 
-tram: no connections
-sprinter: no connections
-rail: Koach(5) 
-----------------------------------
-Koach:
-bus: Hazor(5) 
-tram: no connections
-sprinter: no connections
-rail: Hazor(5) 
-----------------------------------
-Hazor:
-bus: Zefat(10) 
-tram: no connections
-sprinter: no connections
-rail: Zefat(1) 
-----------------------------------
-Zefat:
-bus: no connections
-tram: no connections
-sprinter: no connections
-rail: no connections
-----------------------------------
 a:
 bus: b(5) 
 tram: no connections

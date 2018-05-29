@@ -9,7 +9,7 @@
 #include <memory>
 #include <sstream>
 #include <set>
-#include "Neighbors.h"
+#include "AdjacentStations.h"
 
 using namespace std;
 
@@ -44,7 +44,7 @@ public:
 
     string getName() const;
 
-    void setNeighborsAt(int i, Neighbors n);
+    void setNeighborsAt(int i, AdjacentStations n);
 
     /*  returns string containing all stations the can be reached from current station  */
     string getRouteOptions(int i) const;
@@ -54,16 +54,16 @@ public:
 
     /*  returns reference to neighbor list with given transport option
      * (i.e. all stations adjacent to station by chosen transport option    */
-    Neighbors &getNeighborsAt(const int &i) const;
+    AdjacentStations &getNeighborsAt(const int &i) const;
 
     /*  if given duration from current station to destination
      * station with given transport option is shorter than current
      * duration to destination, travel time is updated to be new duration   */
     void updateConnection(string destinationNode, int duration, int i);
 
-    /*  used by getRouteOptions(). inserts adjacent neighbors to set,
-     *  then repeats action for adjacent neighbors */
-    void insertNeighborsToSetRec(const shared_ptr<set<string>> &neighborsSet, Neighbors neighbors, int i) const;
+    /*  used by getRouteOptions(). inserts adjacent adjacentNeighborVector to set,
+     *  then repeats action for adjacent adjacentNeighborVector */
+    void insertNeighborsToSetRec(const shared_ptr<set<string>> &neighborsSet, AdjacentStations neighbors, int i) const;
 
     /*  adds transport option to given string (for example
      *  : addTransportPrefix("15",0), returns "bus: 15" */
@@ -75,12 +75,12 @@ public:
 private:
     /*  each array spot contains list of stations
      *  that can be reached by specific transport option
-     *  neighbors[0] -> list of adjacent nodes by bus
-     *  neighbors[1] -> list of adjacent nodes by tram
-     *  neighbors[2] -> list of adjacent nodes by sprinter
-     *  neighbors[3] -> list of adjacent nodes by rail
+     *  adjacentNeighborVector[0] -> list of adjacent nodes by bus
+     *  adjacentNeighborVector[1] -> list of adjacent nodes by tram
+     *  adjacentNeighborVector[2] -> list of adjacent nodes by sprinter
+     *  adjacentNeighborVector[3] -> list of adjacent nodes by rail
      *  each list contains pairs of station and travel time */
-    Neighbors neighbors[NUM_OF_TRANSPORT_OPTIONS];
+    AdjacentStations neighbors[NUM_OF_TRANSPORT_OPTIONS];
 
     string name;    //station name
 };
