@@ -261,7 +261,6 @@ string PublicTransport::multiExpressOptions(const string &source, const string &
                     if (i != j) {
                         shared_ptr<Station> exitDestination = getExitStation(connection.first.lock()->getName(),
                                                                              newGraph, j);
-                        cout << enterDestination->getName() << "to " << exitDestination->getName() << endl;
                         enterDestination->getNeighborsAt(0).add(exitDestination, station->getSwitchTransportTime());
                     }
                 }
