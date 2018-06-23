@@ -84,6 +84,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/AdjacentStations.cpp">
+			<Option target="OOP_CPP_EX2"/>
+		</Unit>
+		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/AdjacentStations.h">
+			<Option target="OOP_CPP_EX2"/>
+		</Unit>
 		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/CentralStation.cpp">
 			<Option target="OOP_CPP_EX2"/>
 		</Unit>
@@ -94,12 +100,6 @@
 			<Option target="OOP_CPP_EX2"/>
 		</Unit>
 		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/IntercityStation.h">
-			<Option target="OOP_CPP_EX2"/>
-		</Unit>
-		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/Neighbors.cpp">
-			<Option target="OOP_CPP_EX2"/>
-		</Unit>
-		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/Neighbors.h">
 			<Option target="OOP_CPP_EX2"/>
 		</Unit>
 		<Unit filename="/home/amichai/CLionProjects/OOP_CPP_EX2/PublicTransport.cpp">

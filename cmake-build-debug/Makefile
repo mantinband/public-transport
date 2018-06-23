@@ -123,6 +123,33 @@ OOP_CPP_EX2/fast:
 	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/build
 .PHONY : OOP_CPP_EX2/fast
 
+AdjacentStations.o: AdjacentStations.cpp.o
+
+.PHONY : AdjacentStations.o
+
+# target to build an object file
+AdjacentStations.cpp.o:
+	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o
+.PHONY : AdjacentStations.cpp.o
+
+AdjacentStations.i: AdjacentStations.cpp.i
+
+.PHONY : AdjacentStations.i
+
+# target to preprocess a source file
+AdjacentStations.cpp.i:
+	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.i
+.PHONY : AdjacentStations.cpp.i
+
+AdjacentStations.s: AdjacentStations.cpp.s
+
+.PHONY : AdjacentStations.s
+
+# target to generate assembly for a file
+AdjacentStations.cpp.s:
+	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.s
+.PHONY : AdjacentStations.cpp.s
+
 CentralStation.o: CentralStation.cpp.o
 
 .PHONY : CentralStation.o
@@ -176,33 +203,6 @@ IntercityStation.s: IntercityStation.cpp.s
 IntercityStation.cpp.s:
 	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.s
 .PHONY : IntercityStation.cpp.s
-
-Neighbors.o: Neighbors.cpp.o
-
-.PHONY : Neighbors.o
-
-# target to build an object file
-Neighbors.cpp.o:
-	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o
-.PHONY : Neighbors.cpp.o
-
-Neighbors.i: Neighbors.cpp.i
-
-.PHONY : Neighbors.i
-
-# target to preprocess a source file
-Neighbors.cpp.i:
-	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.i
-.PHONY : Neighbors.cpp.i
-
-Neighbors.s: Neighbors.cpp.s
-
-.PHONY : Neighbors.s
-
-# target to generate assembly for a file
-Neighbors.cpp.s:
-	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.s
-.PHONY : Neighbors.cpp.s
 
 PublicTransport.o: PublicTransport.cpp.o
 
@@ -348,15 +348,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... OOP_CPP_EX2"
+	@echo "... AdjacentStations.o"
+	@echo "... AdjacentStations.i"
+	@echo "... AdjacentStations.s"
 	@echo "... CentralStation.o"
 	@echo "... CentralStation.i"
 	@echo "... CentralStation.s"
 	@echo "... IntercityStation.o"
 	@echo "... IntercityStation.i"
 	@echo "... IntercityStation.s"
-	@echo "... Neighbors.o"
-	@echo "... Neighbors.i"
-	@echo "... Neighbors.s"
 	@echo "... PublicTransport.o"
 	@echo "... PublicTransport.i"
 	@echo "... PublicTransport.s"

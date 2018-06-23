@@ -225,28 +225,28 @@ CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.o.provides: CMakeFiles/OOP_CPP_EX2.
 CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.o.provides.build: CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.o
 
 
-CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o: CMakeFiles/OOP_CPP_EX2.dir/flags.make
-CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o: ../Neighbors.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o -c /home/amichai/CLionProjects/OOP_CPP_EX2/Neighbors.cpp
+CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o: CMakeFiles/OOP_CPP_EX2.dir/flags.make
+CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o: ../AdjacentStations.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o -c /home/amichai/CLionProjects/OOP_CPP_EX2/AdjacentStations.cpp
 
-CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/amichai/CLionProjects/OOP_CPP_EX2/Neighbors.cpp > CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.i
+CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/amichai/CLionProjects/OOP_CPP_EX2/AdjacentStations.cpp > CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.i
 
-CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/amichai/CLionProjects/OOP_CPP_EX2/Neighbors.cpp -o CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.s
+CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/amichai/CLionProjects/OOP_CPP_EX2/AdjacentStations.cpp -o CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.s
 
-CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o.requires:
+CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o.requires:
 
-.PHONY : CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o.requires
+.PHONY : CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o.requires
 
-CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o.provides: CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o.requires
-	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o.provides.build
-.PHONY : CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o.provides
+CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o.provides: CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o.requires
+	$(MAKE) -f CMakeFiles/OOP_CPP_EX2.dir/build.make CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o.provides.build
+.PHONY : CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o.provides
 
-CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o.provides.build: CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o
+CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o.provides.build: CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o
 
 
 # Object files for target OOP_CPP_EX2
@@ -258,7 +258,7 @@ OOP_CPP_EX2_OBJECTS = \
 "CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o" \
 "CMakeFiles/OOP_CPP_EX2.dir/StadStation.cpp.o" \
 "CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.o" \
-"CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o"
+"CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o"
 
 # External object files for target OOP_CPP_EX2
 OOP_CPP_EX2_EXTERNAL_OBJECTS =
@@ -270,7 +270,7 @@ OOP_CPP_EX2: CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.o
 OOP_CPP_EX2: CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o
 OOP_CPP_EX2: CMakeFiles/OOP_CPP_EX2.dir/StadStation.cpp.o
 OOP_CPP_EX2: CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.o
-OOP_CPP_EX2: CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o
+OOP_CPP_EX2: CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o
 OOP_CPP_EX2: CMakeFiles/OOP_CPP_EX2.dir/build.make
 OOP_CPP_EX2: CMakeFiles/OOP_CPP_EX2.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable OOP_CPP_EX2"
@@ -288,7 +288,7 @@ CMakeFiles/OOP_CPP_EX2.dir/requires: CMakeFiles/OOP_CPP_EX2.dir/IntercityStation
 CMakeFiles/OOP_CPP_EX2.dir/requires: CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o.requires
 CMakeFiles/OOP_CPP_EX2.dir/requires: CMakeFiles/OOP_CPP_EX2.dir/StadStation.cpp.o.requires
 CMakeFiles/OOP_CPP_EX2.dir/requires: CMakeFiles/OOP_CPP_EX2.dir/mainFunctions.cpp.o.requires
-CMakeFiles/OOP_CPP_EX2.dir/requires: CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o.requires
+CMakeFiles/OOP_CPP_EX2.dir/requires: CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o.requires
 
 .PHONY : CMakeFiles/OOP_CPP_EX2.dir/requires
 

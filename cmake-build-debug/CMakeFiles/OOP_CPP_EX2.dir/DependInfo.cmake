@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/amichai/CLionProjects/OOP_CPP_EX2/AdjacentStations.cpp" "/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles/OOP_CPP_EX2.dir/AdjacentStations.cpp.o"
   "/home/amichai/CLionProjects/OOP_CPP_EX2/CentralStation.cpp" "/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles/OOP_CPP_EX2.dir/CentralStation.cpp.o"
   "/home/amichai/CLionProjects/OOP_CPP_EX2/IntercityStation.cpp" "/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles/OOP_CPP_EX2.dir/IntercityStation.cpp.o"
-  "/home/amichai/CLionProjects/OOP_CPP_EX2/Neighbors.cpp" "/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles/OOP_CPP_EX2.dir/Neighbors.cpp.o"
   "/home/amichai/CLionProjects/OOP_CPP_EX2/PublicTransport.cpp" "/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles/OOP_CPP_EX2.dir/PublicTransport.cpp.o"
   "/home/amichai/CLionProjects/OOP_CPP_EX2/StadStation.cpp" "/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles/OOP_CPP_EX2.dir/StadStation.cpp.o"
   "/home/amichai/CLionProjects/OOP_CPP_EX2/Station.cpp" "/home/amichai/CLionProjects/OOP_CPP_EX2/cmake-build-debug/CMakeFiles/OOP_CPP_EX2.dir/Station.cpp.o"
