@@ -4,8 +4,7 @@
 usage: <./program name> -i <input file> [<input file> <input file> ..] [ [-c] <configuration file> [-o] <output file name> ]
 ```
 
-### Description
-**program manages public transportation and supports quaries as defined below.**
+## program manages public transportation and supports quaries as defined below.
 
 #### the public transportation is made of stations which can be one of:  
 * central station 
